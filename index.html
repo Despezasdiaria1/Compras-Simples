@@ -162,7 +162,7 @@
                 <i data-lucide="lock" class="w-6 h-6 text-white"></i>
             </div>
             <h3 class="text-lg font-bold tracking-tight mb-2">Masukkan Passcode Owner</h3>
-            <p class="text-xs text-slate-400 mb-6">Gunakan passcode default <span class="text-indigo-400 font-bold">1234</span> untuk mengakses area ini.</p>
+            <p class="text-xs text-slate-400 mb-6">Gunakan passcode untuk mengakses area owner ini.</p>
             
             <!-- Passcode Dot Indicators -->
             <div class="flex gap-4 mb-8 justify-center">
@@ -192,7 +192,7 @@
 
     <!-- Custom iOS Confirmation Modal -->
     <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
-        <div class="glass-premium p-6 rounded-3xl max-w-xs w-full text-center border dark:border-iosGray-850 shadow-2xl animate-fade-in text-slate-850 dark:text-white">
+        <div class="glass-premium p-6 rounded-3xl max-w-xs w-full text-center border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
             <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center mx-auto mb-3">
                 <i data-lucide="help-circle" class="w-6 h-6"></i>
             </div>
@@ -207,7 +207,7 @@
 
     <!-- Edit Product Modal -->
     <div id="edit-product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
-        <div class="glass-premium p-6 rounded-3xl max-w-sm w-full border dark:border-iosGray-850 shadow-2xl animate-fade-in text-slate-850 dark:text-white">
+        <div class="glass-premium p-6 rounded-3xl max-w-sm w-full border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
             <div class="flex justify-between items-center mb-4">
                 <h4 class="font-bold text-sm flex items-center gap-2">
                     <i data-lucide="edit-3" class="w-4 h-4 text-indigo-500"></i>
@@ -257,6 +257,9 @@
                 <button id="nav-btn-pos" onclick="switchTab('pos', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-iosGray-800 transition-all duration-300">POS & Kasir</button>
                 <button id="nav-btn-expense" onclick="switchTab('expense', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
                     <span>Expense</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 hidden lock-indicator"></i>
+                </button>
+                <button id="nav-btn-settings" onclick="switchTab('settings', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
+                    <span>Pengaturan</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 hidden lock-indicator"></i>
                 </button>
                 <button id="nav-btn-guide" onclick="switchTab('guide', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300">Glosarium</button>
             </div>
@@ -411,50 +414,16 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-extrabold tracking-tight">Point of Sale</h2>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">Tambahkan produk kustom, generate QR secara otomatis, dan kelola pembayaran.</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Pilih katalog produk, scan QR seri otomatis, dan kelola pembayaran kasir.</p>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Left Column: Add Product & Product Grid -->
-                <div class="lg:col-span-2 space-y-6">
-                    
-                    <!-- New Product Input Form -->
-                    <div class="p-5 rounded-3xl glass-premium border dark:border-iosGray-900 shadow-sm space-y-4">
-                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-                            <i data-lucide="plus-circle" class="w-4 h-4 text-indigo-500"></i>
-                            <span>Tambah Produk Baru</span>
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nama Produk</label>
-                                <input type="text" id="p-name" placeholder="Contoh: Roti Keju" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Harga Jual ($)</label>
-                                <input type="number" step="0.01" id="p-price" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Modal HPP ($)</label>
-                                <input type="number" step="0.01" id="p-hpp" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-                            <button onclick="addProduct(event)" class="sm:col-span-3 relative overflow-hidden py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5">
-                                <i data-lucide="barcode" class="w-4 h-4"></i> Daftarkan Produk & Generate Seri / QR
-                            </button>
-                            <button onclick="resetProducts(event)" class="relative overflow-hidden py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5" title="Reset Semua Produk">
-                                <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Catalog Display Area -->
-                    <div class="space-y-3">
-                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Catalog Produk</h4>
-                        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            <!-- Populated Dynamically -->
-                        </div>
+                <!-- Left Column: Product Grid Catalog -->
+                <div class="lg:col-span-2 space-y-3">
+                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Catalog Produk</h4>
+                    <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- Populated Dynamically -->
                     </div>
                 </div>
 
@@ -578,7 +547,7 @@
                         </div>
                     </div>
 
-                    <!-- Custom Custom Expense Submission Form -->
+                    <!-- Custom Expense Submission Form -->
                     <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-4">
                         <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                             <i data-lucide="pen-tool" class="w-4 h-4 text-indigo-500"></i>
@@ -612,6 +581,83 @@
                     <div class="mt-4 pt-3 border-t dark:border-iosGray-900 flex justify-between font-bold text-slate-500">
                         <span class="text-xs">Subtotal Biaya:</span>
                         <span id="expense-summary" class="text-rose-500">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== TAB: SETTINGS & OWNER ZONE ==================== -->
+        <section id="tab-settings" class="tab-content hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-extrabold tracking-tight">Pengaturan & Owner Zone</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Konfigurasi produk, kelola sistem keamanan passcode, dan maintenance katalog.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Left Block: Add Product -->
+                <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-4">
+                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-indigo-500"></i>
+                        <span>Tambah Produk Baru</span>
+                    </h4>
+                    <p class="text-xs text-slate-400">Daftarkan produk baru ke katalog dengan nomor seri (SN) & QR Code otomatis.</p>
+                    <div class="space-y-3">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nama Produk</label>
+                            <input type="text" id="p-name" placeholder="Contoh: Roti Keju" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Harga Jual ($)</label>
+                                <input type="number" step="0.01" id="p-price" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Modal HPP ($)</label>
+                                <input type="number" step="0.01" id="p-hpp" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 dark:text-slate-100">
+                            </div>
+                        </div>
+                        <button onclick="addProduct(event)" class="w-full relative overflow-hidden py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5">
+                            <i data-lucide="barcode" class="w-4 h-4"></i> Daftarkan Produk & Generate QR
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Block: Security (Passcode Change) & General Maintenance -->
+                <div class="space-y-6">
+                    <!-- Passcode Security Manager -->
+                    <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-4">
+                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                            <i data-lucide="key" class="w-4 h-4 text-emerald-500"></i>
+                            <span>Ubah Passcode Owner</span>
+                        </h4>
+                        <p class="text-xs text-slate-400">Perbarui passcode keamanan untuk masuk ke Admin/Owner zone.</p>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Passcode Lama</label>
+                                <input type="password" maxlength="4" id="old-passcode-input" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none tracking-widest text-center text-slate-800 dark:text-slate-100">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Passcode Baru</label>
+                                <input type="password" maxlength="4" id="new-passcode-input" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm focus:ring-2 focus:ring-emerald-500 outline-none tracking-widest text-center text-slate-800 dark:text-slate-100">
+                            </div>
+                        </div>
+                        <button onclick="changePasscode(event)" class="w-full relative overflow-hidden py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5">
+                            <i data-lucide="save" class="w-4 h-4"></i> Simpan Passcode Baru
+                        </button>
+                    </div>
+
+                    <!-- System Reset Maintenance -->
+                    <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
+                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 text-rose-500">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                            <span>Zon Bahaya (Maintenance)</span>
+                        </h4>
+                        <p class="text-xs text-slate-400">Semua perubahan pada zona ini bersifat permanen dan tidak dapat dibatalkan.</p>
+                        <button onclick="resetProducts(event)" class="w-full relative overflow-hidden py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Reset Semua Catalog Ke Default
+                        </button>
                     </div>
                 </div>
             </div>
@@ -706,6 +752,13 @@
                 <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 hidden lock-indicator"></i>
             </span>
             <span>Expense</span>
+        </button>
+        <button id="mob-btn-settings" onclick="switchTab('settings', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
+            <span class="relative">
+                <i data-lucide="settings" class="w-5 h-5"></i>
+                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 hidden lock-indicator"></i>
+            </span>
+            <span>Atur</span>
         </button>
         <button id="mob-btn-guide" onclick="switchTab('guide', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
             <i data-lucide="book-open" class="w-5 h-5"></i>
@@ -900,10 +953,34 @@
                     switchTab('dash');
                 }
             } else {
-                showToast("Passcode Salah!", "error");
+                showToast("Passcode Salah! Akses Terkunci.", "error");
                 currentPinInput = "";
                 updatePinDots();
+                closePasscodeModal();
+                switchTab('pos'); // Maintain locked view on POS & Shopping Cart
             }
+        }
+
+        // Passcode Change Mechanism
+        function changePasscode(e) {
+            if (e) addRipple(e);
+            const oldInput = document.getElementById('old-passcode-input').value;
+            const newInput = document.getElementById('new-passcode-input').value;
+
+            if (oldInput !== state.passcode) {
+                showToast("Passcode lama salah!", "error");
+                return;
+            }
+
+            if (newInput.length !== 4 || isNaN(parseInt(newInput))) {
+                showToast("Passcode baru harus berupa 4 digit angka!", "error");
+                return;
+            }
+
+            state.passcode = newInput;
+            document.getElementById('old-passcode-input').value = "";
+            document.getElementById('new-passcode-input').value = "";
+            showToast("Passcode Owner berhasil diperbarui!", "success");
         }
 
         // Dynamic Tab Routing Controller
@@ -911,7 +988,7 @@
             if (event) addRipple(event);
             
             // Route lockdown authorization logic
-            if (state.currentRole === 'cashier' && (tabId === 'dash' || tabId === 'expense')) {
+            if (state.currentRole === 'cashier' && (tabId === 'dash' || tabId === 'expense' || tabId === 'settings')) {
                 openPasscodeModal(tabId);
                 return;
             }
@@ -996,7 +1073,7 @@
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             if(state.products.length === 0) {
-                grid.innerHTML = '<div class="col-span-2 text-center text-slate-400 py-10 italic">Tidak ada produk terdaftar.</div>';
+                grid.innerHTML = '<div class="col-span-2 text-center text-slate-400 py-10 italic">Tidak ada produk terdaftar. Silakan ke Pengaturan untuk menambah produk.</div>';
                 return;
             }
 
@@ -1021,7 +1098,7 @@
                             <span class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-lg">$${p.price.toFixed(2)}</span>
                         </div>
                         <div class="flex items-center justify-center py-2">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(p.sku)}" alt="QR Code" class="w-14 h-14 object-contain rounded-lg shadow-sm border border-slate-100 dark:border-iosGray-800 bg-white p-0.5 animate-fade-in">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(p.sku)}" alt="QR Code" class="w-14 h-14 object-contain rounded-lg shadow-sm border border-slate-100 dark:border-iosGray-800 bg-white p-0.5">
                         </div>
                         <div class="flex justify-between items-center text-[9px] text-slate-400">
                             <span>Seri: ${p.sku}</span>

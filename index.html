@@ -766,10 +766,18 @@
         </button>
     </div>
 
+    <!-- Detector & Status Footer (Very Important for Cache Verification) -->
+    <footer class="w-full text-center py-6 mt-12 border-t border-slate-200 dark:border-iosGray-900 bg-transparent text-[10px] text-slate-400 font-semibold tracking-wider space-y-1 relative z-10">
+        <p>Compras Simples Premium &copy; 2026. All Rights Reserved.</p>
+        <p class="text-indigo-500 font-bold uppercase">VERSION v1.2.0 &bull; SYSTEM ONLINE</p>
+        <p class="text-[9px] text-slate-400 italic">Secured & Synced with Browser LocalStorage Database</p>
+    </footer>
+
     <!-- JavaScript Application Modules -->
     <script>
         // Global Application State (Single Source of Truth)
-        const state = {
+        // Defaults if database is empty
+        const defaultState = {
             currentRole: 'cashier', // Default: 'cashier' or 'owner'
             passcode: '1234',       // Passcode to switch to owner role
             modalAwal: 5000.00,
@@ -790,6 +798,35 @@
             debt: 8.00
         };
 
+        // Active State loaded from LocalStorage or initialized to default
+        let state = {};
+
+        // LocalStorage Database Synchronizer Helpers
+        function loadStateFromDB() {
+            try {
+                const rawData = localStorage.getItem('compras_simples_premium_db');
+                if (rawData) {
+                    state = JSON.parse(rawData);
+                    // Ensure cashier role on initial page load for safety
+                    state.currentRole = 'cashier';
+                    state.cart = []; // clear cart upon fresh load
+                } else {
+                    state = JSON.parse(JSON.stringify(defaultState));
+                }
+            } catch (e) {
+                console.error("Gagal memuat database internal, menggunakan data default.", e);
+                state = JSON.parse(JSON.stringify(defaultState));
+            }
+        }
+
+        function saveStateToDB() {
+            try {
+                localStorage.setItem('compras_simples_premium_db', JSON.stringify(state));
+            } catch (e) {
+                console.error("Gagal menyinkronkan data ke database internal.", e);
+            }
+        }
+
         // Chart Registry references
         const charts = {};
 
@@ -801,6 +838,7 @@
         function updateModalAwal(val) {
             const parsed = parseFloat(val);
             state.modalAwal = isNaN(parsed) ? 0 : parsed;
+            saveStateToDB();
             updateDashboard();
         }
 
@@ -856,6 +894,7 @@
                 // Lock and return to Cashier role
                 state.currentRole = 'cashier';
                 showToast("Berhasil kembali ke Mode Kasir", "info");
+                saveStateToDB();
                 updateRoleUI();
                 switchTab('pos');
             } else {
@@ -946,6 +985,7 @@
                 showToast("Akses Owner Terbuka!", "success");
                 closePasscodeModal();
                 updateRoleUI();
+                saveStateToDB();
                 
                 if (targetTabAfterUnlock) {
                     switchTab(targetTabAfterUnlock);
@@ -980,6 +1020,7 @@
             state.passcode = newInput;
             document.getElementById('old-passcode-input').value = "";
             document.getElementById('new-passcode-input').value = "";
+            saveStateToDB();
             showToast("Passcode Owner berhasil diperbarui!", "success");
         }
 
@@ -1065,6 +1106,7 @@
             document.getElementById('p-price').value = '';
             document.getElementById('p-hpp').value = '';
 
+            saveStateToDB();
             renderProducts();
             showToast(`Produk ${name} terdaftar dengan ${sku}`);
         }
@@ -1126,6 +1168,7 @@
                         { name: 'Croissant Coklat', price: 4.00, hpp: 1.80, sku: 'SN-443912' },
                         { name: 'Matcha Frappe', price: 4.50, hpp: 2.00, sku: 'SN-882312' }
                     ];
+                    saveStateToDB();
                     renderProducts();
                     updateDashboard();
                     showToast("Katalog produk berhasil direset ke bawaan!", "success");
@@ -1151,6 +1194,7 @@
                 `Apakah Anda yakin ingin menghapus "${product.name}" dari katalog?`,
                 () => {
                     state.products = state.products.filter(p => p.sku !== sku);
+                    saveStateToDB();
                     renderProducts();
                     updateDashboard();
                     showToast(`Produk "${product.name}" telah dihapus!`, "success");
@@ -1206,6 +1250,7 @@
             state.products[pIdx].price = price;
             state.products[pIdx].hpp = hpp;
 
+            saveStateToDB();
             renderProducts();
             closeEditModal();
             updateDashboard();
@@ -1333,6 +1378,7 @@
             state.cart = [];
             isDebtCheckbox.checked = false;
             
+            saveStateToDB();
             renderCart();
             renderHistory();
             updateDashboard();
@@ -1401,6 +1447,7 @@
         function addQuickExpense(name, amt, e) {
             addRipple(e);
             state.expenses.push({ name, amt });
+            saveStateToDB();
             renderExpenses();
             updateDashboard();
             showToast(`Pengeluaran rutin ${name} sebesar $${amt.toFixed(2)} ditambahkan`);
@@ -1423,6 +1470,7 @@
             document.getElementById('ex-name').value = '';
             document.getElementById('ex-amt').value = '';
 
+            saveStateToDB();
             renderExpenses();
             updateDashboard();
             showToast(`Pengeluaran kustom ${name} berhasil dicatat`);
@@ -1464,12 +1512,14 @@
             const dashExpense = document.getElementById('dash-expense');
             const dashProfit = document.getElementById('dash-profit');
             const dashDebt = document.getElementById('dash-debt');
+            const dashModalInput = document.getElementById('dash-modal-input');
 
             if (dashIncome) dashIncome.innerText = '$' + income.toFixed(2);
             if (dashCogs) dashCogs.innerText = '$' + totalCOGS.toFixed(2);
             if (dashExpense) dashExpense.innerText = '$' + totalExpenses.toFixed(2);
             if (dashProfit) dashProfit.innerText = (netProfit >= 0 ? '' : '-') + '$' + Math.abs(netProfit).toFixed(2);
             if (dashDebt) dashDebt.innerText = '$' + state.debt.toFixed(2);
+            if (dashModalInput) dashModalInput.value = state.modalAwal;
 
             // ROI Calculator
             const roiPercent = state.modalAwal > 0 ? (netProfit / state.modalAwal) * 100 : 0;
@@ -1652,6 +1702,9 @@
 
         // Entry Initialization point
         window.onload = () => {
+            // LOAD ENTIRE SYSTEM STATE FROM LOCALSTORAGE ON FIRST LOAD
+            loadStateFromDB();
+
             renderProducts();
             renderCart();
             renderHistory();

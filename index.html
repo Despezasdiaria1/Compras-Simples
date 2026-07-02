@@ -5,13 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Compras Simples Premium</title>
     
-    <!-- Premium CDNs -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Tailwind Configuration for Premium Theme -->
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -32,7 +30,6 @@
         }
     </script>
     
-    <!-- Custom CSS for Apple-Like Fluidity -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
         
@@ -42,7 +39,6 @@
             overflow-x: hidden;
         }
 
-        /* Glassmorphism premium stylings */
         .glass-premium {
             background: rgba(255, 255, 255, 0.45);
             backdrop-filter: blur(30px);
@@ -71,7 +67,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
-        /* Ambient Glowing Backgrounds */
         .bg-glow-1 {
             background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, rgba(99,102,241,0) 70%);
         }
@@ -79,7 +74,6 @@
             background: radial-gradient(circle, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0) 70%);
         }
 
-        /* Ripple Animation Mechanics */
         .ripple {
             position: absolute;
             background: rgba(255, 255, 255, 0.4);
@@ -96,32 +90,22 @@
             }
         }
 
-        /* Modern minimal scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(156, 163, 175, 0.3);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(156, 163, 175, 0.5);
+        #label-print-area {
+            display: none;
         }
 
-        /* Advanced Print Stylesheet Optimization */
+        /* Print styles optimization */
         @media print {
             body {
                 background: white !important;
                 color: #000000 !important;
             }
-            body > * {
+            
+            body:not(.print-label-mode) > * {
                 display: none !important;
             }
-            #receipt-print-area {
+            
+            body:not(.print-label-mode) #receipt-print-area {
                 display: block !important;
                 position: absolute !important;
                 left: 0 !important;
@@ -132,20 +116,42 @@
                 background: white !important;
                 padding: 20px !important;
             }
-            #receipt-print-area * {
-                color: #000000 !important;
-            }
-            #receipt-print-area button,
-            #receipt-print-area .peer,
-            #receipt-print-area label {
+            
+            body:not(.print-label-mode) #receipt-print-area button,
+            body:not(.print-label-mode) #receipt-print-area .peer,
+            body:not(.print-label-mode) #receipt-print-area label {
                 display: none !important;
+            }
+
+            body.print-label-mode > * {
+                display: none !important;
+            }
+            
+            body.print-label-mode #label-print-area {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                position: absolute !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 50mm !important;
+                height: 35mm !important;
+                padding: 2mm !important;
+                border: none !important;
+                background: white !important;
+                box-sizing: border-box !important;
+            }
+            
+            body.print-label-mode #label-print-area * {
+                color: #000000 !important;
+                font-family: sans-serif !important;
             }
         }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-iosGray-950 text-slate-900 dark:text-slate-100 min-h-screen relative pb-20">
 
-    <!-- Glowing Background blobs -->
     <div class="fixed top-[-20%] left-[-10%] w-[60vw] h-[60vw] bg-glow-1 pointer-events-none z-0"></div>
     <div class="fixed bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] bg-glow-2 pointer-events-none z-0"></div>
 
@@ -153,92 +159,6 @@
     <div id="toast" class="fixed top-6 right-6 z-50 transform translate-y-[-150%] transition-transform duration-500 ease-out flex items-center gap-3 p-4 rounded-2xl shadow-xl glass-premium text-sm font-semibold max-w-sm">
         <span id="toast-icon" class="flex items-center justify-center"></span>
         <span id="toast-text"></span>
-    </div>
-
-    <!-- Passcode Modal Screen (iOS Lockscreen Style) -->
-    <div id="passcode-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-2xl hidden transition-all duration-300">
-        <div class="flex flex-col items-center max-w-sm w-full p-6 text-center text-white">
-            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
-                <i data-lucide="lock" class="w-6 h-6 text-white"></i>
-            </div>
-            <h3 class="text-lg font-bold tracking-tight mb-2">Masukkan Passcode Owner</h3>
-            <p class="text-xs text-slate-400 mb-6">Gunakan passcode untuk mengakses area owner ini.</p>
-            
-            <!-- Passcode Dot Indicators -->
-            <div class="flex gap-4 mb-8 justify-center">
-                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
-                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
-                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
-                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
-            </div>
-            
-            <!-- Circular Number Keypad -->
-            <div class="grid grid-cols-3 gap-4 w-64 mx-auto mb-6">
-                <button onclick="pressPin('1')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">1</button>
-                <button onclick="pressPin('2')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">2</button>
-                <button onclick="pressPin('3')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">3</button>
-                <button onclick="pressPin('4')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">4</button>
-                <button onclick="pressPin('5')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">5</button>
-                <button onclick="pressPin('6')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">6</button>
-                <button onclick="pressPin('7')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">7</button>
-                <button onclick="pressPin('8')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">8</button>
-                <button onclick="pressPin('9')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">9</button>
-                <button onclick="pressPinBackspace()" class="w-16 h-16 rounded-full bg-transparent transition-all text-sm flex items-center justify-center text-slate-400 hover:text-white"><i data-lucide="delete" class="w-5 h-5"></i></button>
-                <button onclick="pressPin('0')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">0</button>
-                <button onclick="closePasscodeModal()" class="w-16 h-16 rounded-full bg-transparent transition-all text-xs font-bold text-rose-500 hover:text-rose-400 uppercase tracking-wider flex items-center justify-center">Batal</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom iOS Confirmation Modal -->
-    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
-        <div class="glass-premium p-6 rounded-3xl max-w-xs w-full text-center border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
-            <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center mx-auto mb-3">
-                <i data-lucide="help-circle" class="w-6 h-6"></i>
-            </div>
-            <h4 id="confirm-title" class="font-bold text-sm">Konfirmasi Tindakan</h4>
-            <p id="confirm-message" class="text-xs text-slate-500 dark:text-slate-400 mt-2 mb-5">Apakah Anda yakin ingin melakukan tindakan ini?</p>
-            <div class="flex gap-2">
-                <button id="confirm-cancel-btn" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 rounded-xl text-xs font-semibold text-slate-500 transition-all">Batal</button>
-                <button id="confirm-ok-btn" class="flex-1 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all">Ya, Lanjutkan</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Product Modal -->
-    <div id="edit-product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
-        <div class="glass-premium p-6 rounded-3xl max-w-sm w-full border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
-            <div class="flex justify-between items-center mb-4">
-                <h4 class="font-bold text-sm flex items-center gap-2">
-                    <i data-lucide="edit-3" class="w-4 h-4 text-indigo-500"></i>
-                    <span>Edit Detail Produk</span>
-                </h4>
-                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
-            </div>
-            <input type="hidden" id="edit-sku">
-            <div class="space-y-3">
-                <div class="space-y-1">
-                    <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nama Produk</label>
-                    <input type="text" id="edit-name" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Harga Jual ($)</label>
-                        <input type="number" step="0.01" id="edit-price" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
-                    </div>
-                    <div class="space-y-1">
-                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Modal HPP ($)</label>
-                        <input type="number" step="0.01" id="edit-hpp" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
-                    </div>
-                </div>
-            </div>
-            <div class="flex gap-2 mt-5">
-                <button onclick="closeEditModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 rounded-xl text-xs font-semibold text-slate-500 transition-all">Batal</button>
-                <button onclick="saveProductEdit()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all">Simpan Perubahan</button>
-            </div>
-        </div>
     </div>
 
     <!-- Navigation Bar -->
@@ -251,22 +171,21 @@
             
             <!-- Desktop Navigation -->
             <div class="hidden md:flex bg-slate-100 dark:bg-iosGray-900 p-1 rounded-2xl relative overflow-hidden">
-                <button id="nav-btn-dash" onclick="switchTab('dash', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
-                    <span>Dashboard</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 hidden lock-indicator"></i>
-                </button>
                 <button id="nav-btn-pos" onclick="switchTab('pos', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-iosGray-800 transition-all duration-300">POS & Kasir</button>
+                <button id="nav-btn-dash" onclick="switchTab('dash', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
+                    <span>Dashboard</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 lock-indicator"></i>
+                </button>
                 <button id="nav-btn-expense" onclick="switchTab('expense', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
-                    <span>Expense</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 hidden lock-indicator"></i>
+                    <span>Expense</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 lock-indicator"></i>
                 </button>
                 <button id="nav-btn-settings" onclick="switchTab('settings', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1">
-                    <span>Pengaturan</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 hidden lock-indicator"></i>
+                    <span>Pengaturan</span> <i data-lucide="lock" class="w-3.5 h-3.5 text-slate-400 lock-indicator"></i>
                 </button>
                 <button id="nav-btn-guide" onclick="switchTab('guide', event)" class="nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300">Glosarium</button>
             </div>
 
-            <!-- Utility controls (Theme Switcher & Role Switcher) -->
+            <!-- Utility controls -->
             <div class="flex items-center gap-2">
-                <!-- Role switcher badge -->
                 <button onclick="toggleRole(event)" id="role-badge" class="px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 border dark:border-iosGray-800 shadow-sm">
                     <span id="role-badge-icon-container" class="flex items-center justify-center">
                         <i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>
@@ -301,7 +220,6 @@
 
             <!-- Metric Stats Grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <!-- Card 1: Modal Awal -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-cyan-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-cyan-500/10 dark:text-cyan-400/5">
                         <i data-lucide="piggy-bank" class="w-8 h-8"></i>
@@ -314,7 +232,6 @@
                     <p class="text-[10px] text-slate-400 mt-1">Modal Awal Investasi</p>
                 </div>
 
-                <!-- Card 2: Omzet -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-indigo-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-indigo-500/10 dark:text-indigo-400/5">
                         <i data-lucide="trending-up" class="w-8 h-8"></i>
@@ -324,7 +241,6 @@
                     <p class="text-[10px] text-indigo-500 mt-1 font-semibold">Total Omzet</p>
                 </div>
 
-                <!-- Card 3: COGS / Total HPP -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-slate-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-slate-500/10 dark:text-slate-400/5">
                         <i data-lucide="package" class="w-8 h-8"></i>
@@ -334,7 +250,6 @@
                     <p class="text-[10px] text-slate-400 mt-1">Modal Produk Terjual</p>
                 </div>
 
-                <!-- Card 4: Expenses -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-rose-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-rose-500/10 dark:text-rose-400/5">
                         <i data-lucide="credit-card" class="w-8 h-8"></i>
@@ -344,7 +259,6 @@
                     <p class="text-[10px] text-slate-400 mt-1">Total Biaya Operasional</p>
                 </div>
 
-                <!-- Card 5: Profit Bersih -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-emerald-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-emerald-500/10 dark:text-emerald-400/5">
                         <i data-lucide="wallet" class="w-8 h-8"></i>
@@ -354,7 +268,6 @@
                     <p class="text-[10px] text-slate-400 mt-1">Laba Bersih Riil</p>
                 </div>
 
-                <!-- Card 6: ROI -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-purple-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-purple-500/10 dark:text-purple-400/5">
                         <i data-lucide="percent" class="w-8 h-8"></i>
@@ -364,7 +277,6 @@
                     <p id="dash-roi-sub" class="text-[10px] text-slate-400 mt-1">Laju Balik Modal</p>
                 </div>
 
-                <!-- Card 7: BEP -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-orange-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-orange-500/10 dark:text-orange-400/5">
                         <i data-lucide="calculator" class="w-8 h-8"></i>
@@ -374,7 +286,6 @@
                     <p id="dash-bep-sub" class="text-[10px] text-slate-400 mt-1">Target Penjualan</p>
                 </div>
 
-                <!-- Card 8: Hutang -->
                 <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-amber-500 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-amber-500/10 dark:text-amber-400/5">
                         <i data-lucide="alert-circle" class="w-8 h-8"></i>
@@ -387,14 +298,12 @@
 
             <!-- Dashboard Analytics Chart Section -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Sales Line Chart -->
                 <div class="md:col-span-2 p-6 rounded-3xl glass-premium shadow-sm">
                     <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Tren Penjualan Terakhir</h4>
                     <div class="h-64">
                         <canvas id="chartSales"></canvas>
                     </div>
                 </div>
-                <!-- Expense Composition Doughnut Chart -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm flex flex-col justify-between">
                     <div>
                         <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Struktur Pengeluaran</h4>
@@ -443,7 +352,7 @@
                             </div>
                         </h4>
                         
-                        <!-- Metadata and Timestamp of Transaction -->
+                        <!-- Metadata of Transaction -->
                         <div class="border-b dark:border-iosGray-900 py-3 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
                             <div class="flex justify-between">
                                 <span>Tanggal:</span>
@@ -471,7 +380,7 @@
                                 <span id="cart-total" class="text-2xl font-black text-slate-900 dark:text-white">$0.00</span>
                             </div>
 
-                            <!-- Toggle for marking as Customer Debt -->
+                            <!-- Toggle for Customer Debt -->
                             <div class="flex items-center justify-between p-3 bg-slate-100/50 dark:bg-iosGray-900 rounded-xl">
                                 <div class="flex items-center gap-2">
                                     <span class="text-indigo-500 flex items-center justify-center">
@@ -494,7 +403,7 @@
                         </div>
                     </div>
 
-                    <!-- Short Sales History Log -->
+                    <!-- Short Sales History Log with Historical reprint button -->
                     <div class="p-5 rounded-3xl glass-premium shadow-sm space-y-3">
                         <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Riwayat Penjualan Terakhir</h4>
                         <div id="history-list" class="max-h-48 overflow-y-auto space-y-2 text-[11px]">
@@ -596,7 +505,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Left Block: Add Product -->
+                <!-- Left Block: Add Product (Successfully moved to Settings!) -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-4">
                     <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
                         <i data-lucide="plus-circle" class="w-4 h-4 text-indigo-500"></i>
@@ -648,11 +557,11 @@
                         </button>
                     </div>
 
-                    <!-- System Reset Maintenance -->
+                    <!-- System Reset Maintenance (Moved to Settings!) -->
                     <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                         <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 text-rose-500">
                             <i data-lucide="alert-triangle" class="w-4 h-4"></i>
-                            <span>Zon Bahaya (Maintenance)</span>
+                            <span>Zona Bahaya (Maintenance)</span>
                         </h4>
                         <p class="text-xs text-slate-400">Semua perubahan pada zona ini bersifat permanen dan tidak dapat dibatalkan.</p>
                         <button onclick="resetProducts(event)" class="w-full relative overflow-hidden py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all active:scale-98 shadow-md flex items-center justify-center gap-1.5">
@@ -673,7 +582,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Glossarium Term 1 -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="text-indigo-500 flex items-center justify-center"><i data-lucide="trending-up" class="w-5 h-5"></i></span>
@@ -687,7 +595,6 @@
                     </div>
                 </div>
 
-                <!-- Glossarium Term 2 -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="text-rose-500 flex items-center justify-center"><i data-lucide="trending-down" class="w-5 h-5"></i></span>
@@ -701,7 +608,6 @@
                     </div>
                 </div>
 
-                <!-- Glossarium Term 3 -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="text-amber-500 flex items-center justify-center"><i data-lucide="coins" class="w-5 h-5"></i></span>
@@ -715,7 +621,6 @@
                     </div>
                 </div>
 
-                <!-- Glossarium Term 4 -->
                 <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                     <div class="flex items-center gap-2">
                         <span class="text-emerald-500 flex items-center justify-center"><i data-lucide="award" class="w-5 h-5"></i></span>
@@ -733,30 +638,121 @@
 
     </main>
 
+    <!-- Passcode Modal Screen (iOS Lockscreen Style) -->
+    <div id="passcode-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-2xl hidden transition-all duration-300">
+        <div class="flex flex-col items-center max-w-sm w-full p-6 text-center text-white">
+            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center mb-4 shadow-lg shadow-indigo-500/30">
+                <i data-lucide="lock" class="w-6 h-6 text-white"></i>
+            </div>
+            <h3 class="text-lg font-bold tracking-tight mb-1">Masukkan Passcode Owner</h3>
+            <p class="text-xs text-slate-400 mb-6">Gunakan passcode untuk mengakses area owner ini.</p>
+            
+            <!-- Passcode Dot Indicators -->
+            <div class="flex gap-4 mb-6 justify-center">
+                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
+                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
+                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
+                <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500"></div>
+            </div>
+            
+            <!-- Circular Number Keypad -->
+            <div class="grid grid-cols-3 gap-4 w-64 mx-auto mb-4">
+                <button onclick="pressPin('1')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">1</button>
+                <button onclick="pressPin('2')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">2</button>
+                <button onclick="pressPin('3')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">3</button>
+                <button onclick="pressPin('4')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">4</button>
+                <button onclick="pressPin('5')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">5</button>
+                <button onclick="pressPin('6')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">6</button>
+                <button onclick="pressPin('7')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">7</button>
+                <button onclick="pressPin('8')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">8</button>
+                <button onclick="pressPin('9')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">9</button>
+                <button onclick="pressPinBackspace()" class="w-16 h-16 rounded-full bg-transparent transition-all text-sm flex items-center justify-center text-slate-400 hover:text-white"><i data-lucide="delete" class="w-5 h-5"></i></button>
+                <button onclick="pressPin('0')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl flex items-center justify-center border border-slate-800">0</button>
+                <button onclick="closePasscodeModal()" class="w-16 h-16 rounded-full bg-transparent transition-all text-xs font-bold text-rose-500 hover:text-rose-400 uppercase tracking-wider flex items-center justify-center">Batal</button>
+            </div>
+
+            <!-- Password Reset Trigger -->
+            <button onclick="triggerRescueReset()" class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold underline mt-2">
+                Lupa Passcode? Reset ke Default (1234)
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom iOS Confirmation Modal -->
+    <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="glass-premium p-6 rounded-3xl max-w-xs w-full text-center border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
+            <div id="confirm-icon-box" class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center mx-auto mb-3">
+                <i id="confirm-icon" data-lucide="help-circle" class="w-6 h-6"></i>
+            </div>
+            <h4 id="confirm-title" class="font-bold text-sm">Konfirmasi Tindakan</h4>
+            <p id="confirm-message" class="text-xs text-slate-500 dark:text-slate-400 mt-2 mb-5">Apakah Anda yakin ingin melakukan tindakan ini?</p>
+            <div class="flex gap-2">
+                <button id="confirm-cancel-btn" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 rounded-xl text-xs font-semibold text-slate-500 transition-all">Batal</button>
+                <button id="confirm-ok-btn" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="edit-product-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
+        <div class="glass-premium p-6 rounded-3xl max-w-sm w-full border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="font-bold text-sm flex items-center gap-2">
+                    <i data-lucide="edit-3" class="w-4 h-4 text-indigo-500"></i>
+                    <span>Edit Detail Produk</span>
+                </h4>
+                <button onclick="closeEditModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <input type="hidden" id="edit-sku">
+            <div class="space-y-3">
+                <div class="space-y-1">
+                    <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Nama Produk</label>
+                    <input type="text" id="edit-name" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Harga Jual ($)</label>
+                        <input type="number" step="0.01" id="edit-price" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Modal HPP ($)</label>
+                        <input type="number" step="0.01" id="edit-hpp" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dark:text-slate-100">
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-2 mt-5">
+                <button onclick="closeEditModal()" class="flex-1 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 rounded-xl text-xs font-semibold text-slate-500 transition-all">Batal</button>
+                <button onclick="saveProductEdit()" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all">Simpan Perubahan</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile Navigation Bar -->
     <div class="fixed bottom-0 left-0 right-0 md:hidden z-40 glass-nav p-2 flex justify-around">
-        <button id="mob-btn-dash" onclick="switchTab('dash', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
-            <span class="relative">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 hidden lock-indicator"></i>
-            </span>
-            <span>Dash</span>
-        </button>
         <button id="mob-btn-pos" onclick="switchTab('pos', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-indigo-600">
             <i data-lucide="shopping-cart" class="w-5 h-5"></i>
             <span>POS</span>
         </button>
+        <button id="mob-btn-dash" onclick="switchTab('dash', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
+            <span class="relative">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 lock-indicator"></i>
+            </span>
+            <span>Dash</span>
+        </button>
         <button id="mob-btn-expense" onclick="switchTab('expense', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
             <span class="relative">
                 <i data-lucide="receipt" class="w-5 h-5"></i>
-                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 hidden lock-indicator"></i>
+                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 lock-indicator"></i>
             </span>
             <span>Expense</span>
         </button>
         <button id="mob-btn-settings" onclick="switchTab('settings', event)" class="mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400">
             <span class="relative">
                 <i data-lucide="settings" class="w-5 h-5"></i>
-                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 hidden lock-indicator"></i>
+                <i data-lucide="lock" class="w-2.5 h-2.5 text-slate-400 absolute -top-1 -right-1 lock-indicator"></i>
             </span>
             <span>Atur</span>
         </button>
@@ -766,20 +762,21 @@
         </button>
     </div>
 
-    <!-- Detector & Status Footer (Very Important for Cache Verification) -->
+    <!-- Detector & Status Footer -->
     <footer class="w-full text-center py-6 mt-12 border-t border-slate-200 dark:border-iosGray-900 bg-transparent text-[10px] text-slate-400 font-semibold tracking-wider space-y-1 relative z-10">
         <p>Compras Simples Premium &copy; 2026. All Rights Reserved.</p>
         <p class="text-indigo-500 font-bold uppercase">VERSION v1.2.0 &bull; SYSTEM ONLINE</p>
         <p class="text-[9px] text-slate-400 italic">Secured & Synced with Browser LocalStorage Database</p>
     </footer>
 
+    <!-- Hidden Print Area for Sticky Product Labels (Prints ONLY during body.print-label-mode) -->
+    <div id="label-print-area" class="flex flex-col items-center justify-center"></div>
+
     <!-- JavaScript Application Modules -->
     <script>
-        // Global Application State (Single Source of Truth)
-        // Defaults if database is empty
         const defaultState = {
-            currentRole: 'cashier', // Default: 'cashier' or 'owner'
-            passcode: '1234',       // Passcode to switch to owner role
+            currentRole: 'cashier', 
+            passcode: '1234',       
             modalAwal: 5000.00,
             products: [
                 { name: 'Kopi Susu Aren', price: 3.50, hpp: 1.20, sku: 'SN-778231' },
@@ -788,33 +785,29 @@
             ],
             cart: [],
             sales: [
-                { total: 11.50, hpp: 5.00, items: 'Kopi Susu Aren x1, Croissant Coklat x2', timestamp: '09:42' },
-                { total: 7.00, hpp: 2.40, items: 'Kopi Susu Aren x2', timestamp: '11:15' }
+                { total: 11.50, hpp: 5.00, items: 'Kopi Susu Aren x1, Croissant Coklat x2', timestamp: '09 Jun 2026 09:42' },
+                { total: 7.00, hpp: 2.40, items: 'Kopi Susu Aren x2', timestamp: '09 Jun 2026 11:15' }
             ],
             expenses: [
-                { name: 'Listrik Lapak', amt: 15.00 },
-                { name: 'Pulsa POS wifi', amt: 5.00 }
+                { name: 'Listrik Lapak', amt: 15.00, timestamp: '09 Jun 2026 08:00' },
+                { name: 'Pulsa POS wifi', amt: 5.00, timestamp: '09 Jun 2026 08:30' }
             ],
             debt: 8.00
         };
 
-        // Active State loaded from LocalStorage or initialized to default
         let state = {};
 
-        // LocalStorage Database Synchronizer Helpers
         function loadStateFromDB() {
             try {
                 const rawData = localStorage.getItem('compras_simples_premium_db');
                 if (rawData) {
                     state = JSON.parse(rawData);
-                    // Ensure cashier role on initial page load for safety
-                    state.currentRole = 'cashier';
-                    state.cart = []; // clear cart upon fresh load
+                    state.currentRole = 'cashier'; 
+                    state.cart = []; 
                 } else {
                     state = JSON.parse(JSON.stringify(defaultState));
                 }
             } catch (e) {
-                console.error("Gagal memuat database internal, menggunakan data default.", e);
                 state = JSON.parse(JSON.stringify(defaultState));
             }
         }
@@ -823,18 +816,14 @@
             try {
                 localStorage.setItem('compras_simples_premium_db', JSON.stringify(state));
             } catch (e) {
-                console.error("Gagal menyinkronkan data ke database internal.", e);
+                console.error("Gagal menyinkronkan ke database internal.", e);
             }
         }
 
-        // Chart Registry references
         const charts = {};
-
-        // Lockscreen passcode input variable state
         let currentPinInput = "";
         let targetTabAfterUnlock = "";
 
-        // Modal Awal Dynamic Input updates
         function updateModalAwal(val) {
             const parsed = parseFloat(val);
             state.modalAwal = isNaN(parsed) ? 0 : parsed;
@@ -842,9 +831,9 @@
             updateDashboard();
         }
 
-        // Ripple Animation Engine
         function addRipple(e) {
             const btn = e.currentTarget;
+            if (!btn) return;
             const ripple = document.createElement("span");
             const d = Math.max(btn.offsetWidth, btn.offsetHeight);
             
@@ -861,7 +850,6 @@
             setTimeout(() => ripple.remove(), 500);
         }
 
-        // iOS Aesthetic Notifications Utility (To replace native browser alerts)
         function showToast(text, type = 'success') {
             const toast = document.getElementById('toast');
             const icon = document.getElementById('toast-icon');
@@ -887,23 +875,19 @@
             }, 3500);
         }
 
-        // Role controller: Cashier vs Owner
         function toggleRole(e) {
             if (e) addRipple(e);
             if (state.currentRole === 'owner') {
-                // Lock and return to Cashier role
                 state.currentRole = 'cashier';
-                showToast("Berhasil kembali ke Mode Kasir", "info");
+                showToast("Kembali ke Mode Kasir", "info");
                 saveStateToDB();
                 updateRoleUI();
                 switchTab('pos');
             } else {
-                // Open lockscreen PIN modal
                 openPasscodeModal();
             }
         }
 
-        // Passcode Lock Modal controls
         function openPasscodeModal(targetTab = "") {
             currentPinInput = "";
             targetTabAfterUnlock = targetTab;
@@ -938,45 +922,18 @@
             }
         }
 
-        // Update Nav Lock badges
-        function updateRoleUI() {
-            const badgeText = document.getElementById('role-badge-text');
-            const badgeIconContainer = document.getElementById('role-badge-icon-container');
-            const lockIndicators = document.querySelectorAll('.lock-indicator');
-            const kasirLabel = document.getElementById('receipt-kasir-label');
-
-            if (!badgeText || !badgeIconContainer) return;
-
-            if (state.currentRole === 'owner') {
-                badgeText.innerText = "Owner Mode";
-                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 shadow-sm";
-                badgeIconContainer.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>';
-                
-                // Hide locks
-                lockIndicators.forEach(lock => lock.classList.add('hidden'));
-                if (kasirLabel) kasirLabel.innerText = "Owner/Admin";
-            } else {
-                badgeText.innerText = "Kasir Mode";
-                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 border dark:border-iosGray-800 shadow-sm";
-                badgeIconContainer.innerHTML = '<i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>';
-                
-                // Show locks
-                lockIndicators.forEach(lock => lock.classList.remove('hidden'));
-                if (kasirLabel) kasirLabel.innerText = "Kasir";
-            }
-            renderProducts(); // Refresh buttons inside the catalog cards
-            lucide.createIcons();
-        }
-
-        function updatePinDots() {
-            const dots = document.querySelectorAll('.pin-dot');
-            dots.forEach((dot, idx) => {
-                if (idx < currentPinInput.length) {
-                    dot.className = "pin-dot w-3.5 h-3.5 rounded-full bg-indigo-500 border border-indigo-500";
-                } else {
-                    dot.className = "pin-dot w-3.5 h-3.5 rounded-full border border-slate-500";
-                }
-            });
+        function triggerRescueReset() {
+            showCustomConfirm(
+                "Reset Passcode?",
+                "Apakah Anda ingin mereset passcode kembali ke default '1234'?",
+                () => {
+                    state.passcode = "1234";
+                    saveStateToDB();
+                    showToast("Passcode di-reset menjadi 1234!", "success");
+                    closePasscodeModal();
+                },
+                false
+            );
         }
 
         function validatePasscode() {
@@ -997,11 +954,46 @@
                 currentPinInput = "";
                 updatePinDots();
                 closePasscodeModal();
-                switchTab('pos'); // Maintain locked view on POS & Shopping Cart
+                switchTab('pos'); 
             }
         }
 
-        // Passcode Change Mechanism
+        function updateRoleUI() {
+            const badgeText = document.getElementById('role-badge-text');
+            const badgeIconContainer = document.getElementById('role-badge-icon-container');
+            const lockIndicators = document.querySelectorAll('.lock-indicator');
+            const kasirLabel = document.getElementById('receipt-kasir-label');
+
+            if (!badgeText || !badgeIconContainer) return;
+
+            if (state.currentRole === 'owner') {
+                badgeText.innerText = "Owner Mode";
+                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800 shadow-sm";
+                badgeIconContainer.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>';
+                lockIndicators.forEach(lock => lock.classList.add('hidden'));
+                if (kasirLabel) kasirLabel.innerText = "Owner/Admin";
+            } else {
+                badgeText.innerText = "Kasir Mode";
+                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-900 dark:hover:bg-iosGray-800 border dark:border-iosGray-800 shadow-sm";
+                badgeIconContainer.innerHTML = '<i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>';
+                lockIndicators.forEach(lock => lock.classList.remove('hidden'));
+                if (kasirLabel) kasirLabel.innerText = "Kasir";
+            }
+            renderProducts(); 
+            lucide.createIcons();
+        }
+
+        function updatePinDots() {
+            const dots = document.querySelectorAll('.pin-dot');
+            dots.forEach((dot, idx) => {
+                if (idx < currentPinInput.length) {
+                    dot.className = "pin-dot w-3.5 h-3.5 rounded-full bg-indigo-500 border border-indigo-500";
+                } else {
+                    dot.className = "pin-dot w-3.5 h-3.5 rounded-full border border-slate-500";
+                }
+            });
+        }
+
         function changePasscode(e) {
             if (e) addRipple(e);
             const oldInput = document.getElementById('old-passcode-input').value;
@@ -1024,32 +1016,24 @@
             showToast("Passcode Owner berhasil diperbarui!", "success");
         }
 
-        // Dynamic Tab Routing Controller
         function switchTab(tabId, event) {
             if (event) addRipple(event);
             
-            // Route lockdown authorization logic
             if (state.currentRole === 'cashier' && (tabId === 'dash' || tabId === 'expense' || tabId === 'settings')) {
                 openPasscodeModal(tabId);
                 return;
             }
 
-            // Hide all tab sections
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            
-            // Show target section
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
-            // Reset tab classnames for desktop
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-all duration-300 flex items-center gap-1";
             });
-            // Reset tab classnames for mobile
             document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
                 btn.className = "mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400";
             });
 
-            // Set active states
             const activeNavDesktop = document.getElementById(`nav-btn-${tabId}`);
             if (activeNavDesktop) {
                 activeNavDesktop.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-iosGray-800 transition-all duration-300 shadow-sm flex items-center gap-1";
@@ -1062,11 +1046,12 @@
 
             if (tabId === 'dash') {
                 updateDashboard();
+            } else if (tabId === 'settings') {
+                renderSettingsProducts(); 
             }
             lucide.createIcons();
         }
 
-        // Dark/Light Theme Handler
         function toggleTheme(e) {
             addRipple(e);
             const html = document.documentElement;
@@ -1084,7 +1069,6 @@
             setTimeout(renderCharts, 100);
         }
 
-        // Add Product Form Controller
         function addProduct(e) {
             addRipple(e);
             const name = document.getElementById('p-name').value.trim();
@@ -1101,17 +1085,68 @@
 
             state.products.push({ name, price, hpp, sku });
             
-            // Flush Inputs
             document.getElementById('p-name').value = '';
             document.getElementById('p-price').value = '';
             document.getElementById('p-hpp').value = '';
 
             saveStateToDB();
             renderProducts();
+            renderSettingsProducts();
             showToast(`Produk ${name} terdaftar dengan ${sku}`);
         }
 
-        // Render Catalog Grid in POS
+        function showCustomConfirm(title, message, onConfirm, isDangerous = true, iconType = "help-circle") {
+            const modal = document.getElementById('confirm-modal');
+            const titleEl = document.getElementById('confirm-title');
+            const msgEl = document.getElementById('confirm-message');
+            const okBtn = document.getElementById('confirm-ok-btn');
+            const cancelBtn = document.getElementById('confirm-cancel-btn');
+            const iconBox = document.getElementById('confirm-icon-box');
+
+            titleEl.innerText = title;
+            msgEl.innerText = message;
+            
+            if (iconType === "printer") {
+                iconBox.innerHTML = '<i data-lucide="printer" class="w-6 h-6"></i>';
+                iconBox.className = "w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-950/40 text-indigo-500 flex items-center justify-center mx-auto mb-3";
+            } else if (isDangerous) {
+                iconBox.innerHTML = '<i data-lucide="alert-triangle" class="w-6 h-6"></i>';
+                iconBox.className = "w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center mx-auto mb-3";
+            } else {
+                iconBox.innerHTML = '<i data-lucide="help-circle" class="w-6 h-6"></i>';
+                iconBox.className = "w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-950/40 text-blue-500 flex items-center justify-center mx-auto mb-3";
+            }
+
+            if (isDangerous) {
+                okBtn.className = "flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all active:scale-95";
+                okBtn.innerText = "Ya, Hapus";
+            } else if (iconType === "printer") {
+                okBtn.className = "flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all active:scale-95";
+                okBtn.innerText = "Ya, Cetak";
+            } else {
+                okBtn.className = "flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all active:scale-95";
+                okBtn.innerText = "Ya, Lanjutkan";
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+
+            const cleanUp = () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            };
+
+            okBtn.onclick = () => {
+                cleanUp();
+                onConfirm();
+            };
+
+            cancelBtn.onclick = () => {
+                cleanUp();
+            };
+        }
+
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             if(state.products.length === 0) {
@@ -1119,20 +1154,7 @@
                 return;
             }
 
-            const isOwner = state.currentRole === 'owner';
-
             grid.innerHTML = state.products.map(p => {
-                const actionButtons = isOwner ? `
-                    <div class="flex gap-1">
-                        <button onclick="openEditModal('${p.sku}', event)" class="w-6 h-6 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white text-indigo-600 dark:text-indigo-400 transition-all flex items-center justify-center border dark:border-iosGray-800" title="Edit">
-                            <i data-lucide="edit-3" class="w-3 h-3"></i>
-                        </button>
-                        <button onclick="deleteProduct('${p.sku}', event)" class="w-6 h-6 rounded-lg bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-600 dark:hover:bg-rose-500 hover:text-white text-rose-600 dark:text-rose-400 transition-all flex items-center justify-center border dark:border-iosGray-800" title="Hapus">
-                            <i data-lucide="trash-2" class="w-3 h-3"></i>
-                        </button>
-                    </div>
-                ` : '';
-
                 return `
                     <div onclick="addToCart('${p.name}', ${p.price}, ${p.hpp}, event)" class="relative overflow-hidden p-4 rounded-3xl glass-premium hover:border-indigo-500 cursor-pointer transition-all duration-300 flex flex-col justify-between h-48 border dark:border-iosGray-900">
                         <div class="flex justify-between items-start gap-1">
@@ -1144,7 +1166,7 @@
                         </div>
                         <div class="flex justify-between items-center text-[9px] text-slate-400">
                             <span>Seri: ${p.sku}</span>
-                            ${actionButtons ? actionButtons : `<span class="text-[8px] bg-slate-100 dark:bg-iosGray-900 px-1 py-0.5 rounded text-slate-500">Tap to buy</span>`}
+                            <span class="text-[8px] bg-indigo-50 dark:bg-indigo-950/40 px-1 py-0.5 rounded text-indigo-500">Pilih</span>
                         </div>
                     </div>
                 `;
@@ -1152,7 +1174,84 @@
             lucide.createIcons();
         }
 
-        // Reset Catalog to Default
+        function renderSettingsProducts() {
+            const block = document.getElementById('tab-settings');
+            if (!block) return;
+            
+            let settingsProdList = document.getElementById('settings-products-list');
+            if (!settingsProdList) {
+                const newListDiv = document.createElement('div');
+                newListDiv.id = 'settings-products-list';
+                newListDiv.className = 'p-6 rounded-3xl glass-premium shadow-sm space-y-4 md:col-span-2 mt-6';
+                block.appendChild(newListDiv);
+                settingsProdList = newListDiv;
+            }
+
+            if (state.products.length === 0) {
+                settingsProdList.innerHTML = `
+                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Manajemen Katalog Produk</h4>
+                    <p class="text-xs text-slate-400 italic">Belum ada produk terdaftar.</p>
+                `;
+                return;
+            }
+
+            settingsProdList.innerHTML = `
+                <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-2">Manajemen Katalog Produk</h4>
+                <p class="text-xs text-slate-400 mb-4">Edit data produk atau cetak label stiker QR untuk ditempelkan pada fisik produk Anda.</p>
+                <div class="divide-y divide-slate-100 dark:divide-iosGray-900">
+                    ${state.products.map(p => `
+                        <div class="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                            <div class="flex items-center gap-3">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(p.sku)}" class="w-10 h-10 border rounded bg-white p-0.5">
+                                <div class="flex flex-col">
+                                    <span class="font-bold text-slate-800 dark:text-slate-100">${p.name}</span>
+                                    <span class="text-[10px] text-slate-400 font-mono">SKU: ${p.sku} | HPP: $${p.hpp.toFixed(2)}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-indigo-500 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-1 rounded-lg text-[10px] mr-2">$${p.price.toFixed(2)}</span>
+                                <button onclick="printProductLabel('${p.sku}', event)" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-600 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:text-white border dark:border-emerald-800 font-semibold transition-all flex items-center gap-1" title="Cetak Label QR">
+                                    <i data-lucide="printer" class="w-3.5 h-3.5"></i> Label QR
+                                </button>
+                                <button onclick="openEditModal('${p.sku}', event)" class="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-600 dark:hover:bg-indigo-500 hover:text-white text-indigo-600 dark:text-indigo-400 transition-all border dark:border-iosGray-800" title="Edit">
+                                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button onclick="deleteProduct('${p.sku}', event)" class="p-1.5 rounded-lg bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-600 dark:hover:bg-rose-500 hover:text-white text-rose-600 dark:text-rose-400 transition-all border dark:border-iosGray-800" title="Hapus">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function printProductLabel(sku, event) {
+            if (event) {
+                event.stopPropagation();
+                addRipple(event);
+            }
+            const product = state.products.find(p => p.sku === sku);
+            if (!product) return;
+
+            const labelArea = document.getElementById('label-print-area');
+            labelArea.innerHTML = `
+                <div style="font-size: 10px; font-weight: bold; margin-bottom: 2px;">Compras Simples</div>
+                <div style="font-size: 11px; font-weight: 800; max-width: 45mm; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${product.name}</div>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(product.sku)}" style="width: 18mm; height: 18mm; margin: 1mm 0;" />
+                <div style="font-size: 12px; font-weight: 900; color: #000;">$${product.price.toFixed(2)}</div>
+                <div style="font-size: 8px; font-family: monospace; color: #555;">${product.sku}</div>
+            `;
+
+            document.body.classList.add('print-label-mode');
+            window.print();
+
+            setTimeout(() => {
+                document.body.classList.remove('print-label-mode');
+            }, 500);
+        }
+
         function resetProducts(e) {
             if (e) addRipple(e);
             if (state.currentRole !== 'owner') {
@@ -1170,13 +1269,13 @@
                     ];
                     saveStateToDB();
                     renderProducts();
+                    renderSettingsProducts();
                     updateDashboard();
                     showToast("Katalog produk berhasil direset ke bawaan!", "success");
                 }
             );
         }
 
-        // Delete Individual Product
         function deleteProduct(sku, event) {
             if (event) {
                 event.stopPropagation();
@@ -1196,13 +1295,13 @@
                     state.products = state.products.filter(p => p.sku !== sku);
                     saveStateToDB();
                     renderProducts();
+                    renderSettingsProducts();
                     updateDashboard();
                     showToast(`Produk "${product.name}" telah dihapus!`, "success");
                 }
             );
         }
 
-        // Edit Modal Operations
         function openEditModal(sku, event) {
             if (event) {
                 event.stopPropagation();
@@ -1252,48 +1351,12 @@
 
             saveStateToDB();
             renderProducts();
+            renderSettingsProducts();
             closeEditModal();
             updateDashboard();
             showToast(`Detail "${name}" berhasil diperbarui!`, "success");
         }
 
-        // Custom Confirmation dialog helper
-        function showCustomConfirm(title, message, onConfirm, isDangerous = true) {
-            const modal = document.getElementById('confirm-modal');
-            const titleEl = document.getElementById('confirm-title');
-            const msgEl = document.getElementById('confirm-message');
-            const okBtn = document.getElementById('confirm-ok-btn');
-            const cancelBtn = document.getElementById('confirm-cancel-btn');
-
-            titleEl.innerText = title;
-            msgEl.innerText = message;
-            
-            if (isDangerous) {
-                okBtn.className = "flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all active:scale-95";
-            } else {
-                okBtn.className = "flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all active:scale-95";
-            }
-
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            lucide.createIcons();
-
-            const cleanUp = () => {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            };
-
-            okBtn.onclick = () => {
-                cleanUp();
-                onConfirm();
-            };
-
-            cancelBtn.onclick = () => {
-                cleanUp();
-            };
-        }
-
-        // Add Catalog Product to Cart List (Bundles duplicate products together)
         function addToCart(name, price, hpp, event) {
             if (event) addRipple(event);
             const existing = state.cart.find(item => item.name === name);
@@ -1306,7 +1369,6 @@
             showToast(`${name} dimasukkan ke keranjang`);
         }
 
-        // Render Cart items list
         function renderCart() {
             const list = document.getElementById('cart-list');
             const totalEl = document.getElementById('cart-total');
@@ -1334,16 +1396,14 @@
             totalEl.innerText = '$' + total.toFixed(2);
         }
 
-        // Remove item from Cart
         function removeFromCart(index, event) {
             if (event) addRipple(event);
             state.cart.splice(index, 1);
             renderCart();
         }
 
-        // Checkout & Payment processor
         function processPayment(e) {
-            addRipple(e);
+            if (e) addRipple(e);
             if (state.cart.length === 0) {
                 showToast("Keranjang Anda kosong!", "error");
                 return;
@@ -1354,50 +1414,70 @@
             const itemsSummary = state.cart.map(c => `${c.name} x${c.qty}`).join(', ');
 
             const isDebtCheckbox = document.getElementById('is-debt');
+            const date = new Date();
+            const dateString = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timestamp = `${dateString} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
             
             if (isDebtCheckbox.checked) {
-                // Process transaction as Customer Debt
                 state.debt += total;
                 showToast(`Transaksi berhasil dicatat sebagai HUTANG sebesar $${total.toFixed(2)}`, "info");
-            } else {
-                // Standard Cash payment
-                const date = new Date();
-                const dateString = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-                const timestamp = `${dateString} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
                 
-                state.sales.push({
-                    total,
-                    hpp,
-                    items: itemsSummary,
-                    timestamp
-                });
-                showToast(`Pembayaran sukses sebesar $${total.toFixed(2)}`);
-            }
+                state.cart = [];
+                isDebtCheckbox.checked = false;
+                saveStateToDB();
+                renderCart();
+                updateDashboard();
+            } else {
+                showCustomConfirm(
+                    "Pembayaran Sukses!",
+                    `Total transaksi: $${total.toFixed(2)}. Apakah Anda ingin langsung mencetak struk belanja ini?`,
+                    () => {
+                        state.sales.push({ total, hpp, items: itemsSummary, timestamp });
+                        saveStateToDB();
+                        
+                        printReceipt();
+                        
+                        state.cart = [];
+                        renderCart();
+                        renderHistory();
+                        updateDashboard();
+                        generateReceiptNumber();
+                    },
+                    false, 
+                    "printer" 
+                );
 
-            // Cleanup & Reset Checkout
-            state.cart = [];
-            isDebtCheckbox.checked = false;
-            
-            saveStateToDB();
-            renderCart();
-            renderHistory();
-            updateDashboard();
-            generateReceiptNumber();
+                const cancelBtn = document.getElementById('confirm-cancel-btn');
+                const originalCancel = cancelBtn.onclick;
+                cancelBtn.onclick = () => {
+                    state.sales.push({ total, hpp, items: itemsSummary, timestamp });
+                    saveStateToDB();
+                    
+                    state.cart = [];
+                    isDebtCheckbox.checked = false;
+                    renderCart();
+                    renderHistory();
+                    updateDashboard();
+                    generateReceiptNumber();
+                    
+                    showToast(`Pembayaran sukses sebesar $${total.toFixed(2)}`);
+                    cancelBtn.onclick = originalCancel;
+                    document.getElementById('confirm-modal').classList.add('hidden');
+                };
+            }
         }
 
-        // Auto Generate Receipt Number
         function generateReceiptNumber() {
             const date = new Date();
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
             const random = Math.floor(1000 + Math.random() * 9000);
-            const numStr = `CS-${year}${month}${day}-${random}`;
+            const numStr = `CS-RY-${year}${month}${day}-${random}`;
             const numEl = document.getElementById('receipt-number');
             if (numEl) numEl.innerText = numStr;
         }
 
-        // Time updates inside Receipt
         function updateLiveTime() {
             const now = new Date();
             const options = { 
@@ -1413,17 +1493,39 @@
             if (dateEl) dateEl.innerText = dateString;
         }
 
-        // Print receipt window
         function printReceipt(event) {
             if (event) addRipple(event);
-            if (state.cart.length === 0) {
+            if (state.cart.length === 0 && state.sales.length === 0) {
                 showToast("Keranjang kosong, tidak ada yang bisa dicetak!", "error");
                 return;
             }
             window.print();
         }
 
-        // Render Sales Logs
+        function reprintHistoricalReceipt(index) {
+            const sale = state.sales[index];
+            if (!sale) return;
+
+            const list = document.getElementById('cart-list');
+            const totalEl = document.getElementById('cart-total');
+
+            list.innerHTML = `
+                <div class="p-3 bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-400 rounded-2xl mb-3 text-center font-bold">
+                    REPRINTING RECEIPT
+                </div>
+                <div class="py-2 text-xs italic">
+                    ${sale.items}
+                </div>
+            `;
+            totalEl.innerText = '$' + sale.total.toFixed(2);
+
+            showToast("Memuat struk lama ke layar pencetakan...", "info");
+            setTimeout(() => {
+                window.print();
+                renderCart();
+            }, 500);
+        }
+
         function renderHistory() {
             const history = document.getElementById('history-list');
             if(state.sales.length === 0) {
@@ -1431,29 +1533,36 @@
                 return;
             }
 
-            history.innerHTML = state.sales.map(s => `
-                <div class="bg-slate-50 dark:bg-iosGray-900 border dark:border-iosGray-800 p-2.5 rounded-xl flex flex-col gap-1">
-                    <div class="flex justify-between items-center text-[10px] font-bold text-slate-400">
-                        <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${s.timestamp}</span>
-                        <span class="text-emerald-500 font-extrabold">+$${s.total.toFixed(2)}</span>
+            history.innerHTML = state.sales.slice(-5).map((s, idx) => `
+                <div class="bg-slate-50 dark:bg-iosGray-900 border dark:border-iosGray-800 p-2.5 rounded-xl flex justify-between items-center gap-2">
+                    <div class="flex flex-col gap-1 flex-grow">
+                        <div class="flex justify-between items-center text-[10px] font-bold text-slate-400">
+                            <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${s.timestamp}</span>
+                            <span class="text-emerald-500 font-extrabold">+$${s.total.toFixed(2)}</span>
+                        </div>
+                        <div class="text-slate-600 dark:text-slate-300 font-semibold truncate max-w-[150px] leading-tight">${s.items}</div>
                     </div>
-                    <div class="text-slate-600 dark:text-slate-300 font-semibold truncate leading-tight">${s.items}</div>
+                    <button onclick="reprintHistoricalReceipt(${state.sales.indexOf(s)})" class="p-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-iosGray-800 dark:hover:bg-iosGray-700 rounded-lg text-slate-500 hover:text-slate-800 dark:text-slate-400" title="Cetak Ulang Struk">
+                        <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                    </button>
                 </div>
             `).join('');
             lucide.createIcons();
         }
 
-        // Add Quick/Predefined Operational Expense
         function addQuickExpense(name, amt, e) {
             addRipple(e);
-            state.expenses.push({ name, amt });
+            const date = new Date();
+            const dateString = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timestamp = `${dateString} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+            state.expenses.push({ name, amt, timestamp });
             saveStateToDB();
             renderExpenses();
             updateDashboard();
             showToast(`Pengeluaran rutin ${name} sebesar $${amt.toFixed(2)} ditambahkan`);
         }
 
-        // Add Custom Operational Expense
         function addCustomExpense(e) {
             addRipple(e);
             const name = document.getElementById('ex-name').value.trim();
@@ -1464,9 +1573,12 @@
                 return;
             }
 
-            state.expenses.push({ name, amt });
+            const date = new Date();
+            const dateString = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+            const timestamp = `${dateString} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+
+            state.expenses.push({ name, amt, timestamp });
             
-            // Flush Inputs
             document.getElementById('ex-name').value = '';
             document.getElementById('ex-amt').value = '';
 
@@ -1476,7 +1588,6 @@
             showToast(`Pengeluaran kustom ${name} berhasil dicatat`);
         }
 
-        // Render Expenses log
         function renderExpenses() {
             const list = document.getElementById('expense-list');
             const summary = document.getElementById('expense-summary');
@@ -1489,7 +1600,10 @@
 
             list.innerHTML = state.expenses.map(ex => `
                 <div class="py-3 flex justify-between items-center font-semibold">
-                    <span class="text-slate-700 dark:text-slate-300">${ex.name}</span>
+                    <div class="flex flex-col">
+                        <span class="text-slate-700 dark:text-slate-300">${ex.name}</span>
+                        <span class="text-[9px] text-slate-400">${ex.timestamp || '-'}</span>
+                    </div>
                     <span class="text-rose-500 font-bold">-$${ex.amt.toFixed(2)}</span>
                 </div>
             `).join('');
@@ -1498,7 +1612,6 @@
             summary.innerText = '-$' + totalEx.toFixed(2);
         }
 
-        // Dashboard Metrics Calculator
         function updateDashboard() {
             const income = state.sales.reduce((sum, item) => sum + item.total, 0);
             const totalCOGS = state.sales.reduce((sum, item) => sum + item.hpp, 0);
@@ -1506,7 +1619,6 @@
             
             const netProfit = income - totalCOGS - totalExpenses;
 
-            // Render stats card
             const dashIncome = document.getElementById('dash-income');
             const dashCogs = document.getElementById('dash-cogs');
             const dashExpense = document.getElementById('dash-expense');
@@ -1521,7 +1633,6 @@
             if (dashDebt) dashDebt.innerText = '$' + state.debt.toFixed(2);
             if (dashModalInput) dashModalInput.value = state.modalAwal;
 
-            // ROI Calculator
             const roiPercent = state.modalAwal > 0 ? (netProfit / state.modalAwal) * 100 : 0;
             const roiEl = document.getElementById('dash-roi');
             const roiSubEl = document.getElementById('dash-roi-sub');
@@ -1536,7 +1647,6 @@
                 }
             }
 
-            // BEP (Break-Even Point) Calculations
             const avgPrice = state.products.length > 0 ? state.products.reduce((sum, p) => sum + p.price, 0) / state.products.length : 0;
             const avgHpp = state.products.length > 0 ? state.products.reduce((sum, p) => sum + p.hpp, 0) / state.products.length : 0;
             const avgMargin = avgPrice - avgHpp;
@@ -1548,7 +1658,6 @@
             if (bepEl) bepEl.innerText = bepUnits + " Unit";
             if (bepSubEl) bepSubEl.innerText = avgMargin > 0 ? `Target: $${(bepUnits * avgPrice).toFixed(2)}` : "Belum ada profit margin";
 
-            // Operational cost efficiency index indicator
             const efficiency = document.getElementById('eff-indicator');
             if (efficiency) {
                 if (income === 0) {
@@ -1572,13 +1681,11 @@
             renderCharts();
         }
 
-        // Dynamic Chart Renderings
         function renderCharts() {
             const isDark = document.documentElement.classList.contains('dark');
             const labelColor = isDark ? '#9ca3af' : '#4b5563';
             const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
 
-            // Line Chart: Sales trend
             const canvasSales = document.getElementById('chartSales');
             if (canvasSales) {
                 if (charts.sales) charts.sales.destroy();
@@ -1622,7 +1729,6 @@
                 });
             }
 
-            // Doughnut Chart: Expense structures
             const canvasExpenses = document.getElementById('chartExpenses');
             if (canvasExpenses) {
                 if (charts.expenses) charts.expenses.destroy();
@@ -1662,12 +1768,12 @@
             }
         }
 
-        // Export Data Log into Excel Sheet
         function exportData(e) {
             if (e) addRipple(e);
             
             const salesReport = state.sales.map((s, idx) => ({
                 No: idx + 1,
+                Tanggal: s.timestamp || '-', 
                 Tipe: 'Penjualan (Receita)',
                 Detail: s.items,
                 Omzet_Tunai: s.total,
@@ -1678,6 +1784,7 @@
 
             const expenseReport = state.expenses.map((ex, idx) => ({
                 No: idx + 1,
+                Tanggal: ex.timestamp || '-', 
                 Tipe: 'Pengeluaran (Despesa)',
                 Detail: ex.name,
                 Omzet_Tunai: 0,
@@ -1700,9 +1807,7 @@
             showToast("Sukses mengekspor Laporan Excel!");
         }
 
-        // Entry Initialization point
         window.onload = () => {
-            // LOAD ENTIRE SYSTEM STATE FROM LOCALSTORAGE ON FIRST LOAD
             loadStateFromDB();
 
             renderProducts();
@@ -1714,10 +1819,8 @@
             updateLiveTime();
             updateRoleUI();
             
-            // Set initial state view to POS (Cashier role is default)
             switchTab('pos');
 
-            // Setting interval clock ticks
             setInterval(updateLiveTime, 1000);
             
             lucide.createIcons();

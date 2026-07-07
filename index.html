@@ -172,7 +172,6 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <!-- Status Peran -->
                     <div id="role-badge" class="px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-iosGray-900 border dark:border-iosGray-800 shadow-sm">
                         <span id="role-badge-icon-container" class="flex items-center justify-center">
                             <i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>
@@ -180,7 +179,7 @@
                         <span id="role-badge-text">Kasir Mode</span>
                     </div>
 
-                    <!-- Tombol Kunci Manual (Lock Screen) -->
+                    <!-- Tombol Kunci Manual -->
                     <button onclick="lockSystem()" class="w-10 h-10 rounded-full flex items-center justify-center bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400 border dark:border-rose-900/50 hover:bg-rose-600 hover:text-white transition-all active:scale-95" title="Kunci Sistem">
                         <i data-lucide="lock" class="w-5 h-5"></i>
                     </button>
@@ -214,7 +213,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Kolom Kiri: Katalog Grid -->
                     <div class="lg:col-span-2 space-y-3">
                         <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Katalog Layanan & Produk</h4>
                         <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -222,7 +220,6 @@
                         </div>
                     </div>
 
-                    <!-- Kolom Kanan: Keranjang & Struk Belanja -->
                     <div class="space-y-6">
                         <div id="receipt-print-area" class="p-6 rounded-3xl glass-premium shadow-md border dark:border-iosGray-900 flex flex-col min-h-[400px]">
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 border-b dark:border-iosGray-900 pb-3 flex justify-between items-center">
@@ -238,41 +235,28 @@
                                 </div>
                             </h4>
                             
-                            <!-- Informasi Transaksi -->
                             <div class="border-b dark:border-iosGray-900 py-3 text-[11px] text-slate-500 dark:text-slate-400 space-y-1">
-                                <div class="flex justify-between">
-                                    <span>Tanggal:</span>
-                                    <span id="receipt-date" class="font-semibold text-slate-700 dark:text-slate-300">-</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>No. Struk:</span>
-                                    <span id="receipt-number" class="font-mono font-semibold text-slate-700 dark:text-slate-300">-</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Kasir:</span>
-                                    <span id="receipt-kasir-label" class="font-semibold text-slate-700 dark:text-slate-300">Kasir</span>
-                                </div>
+                                <div class="flex justify-between"><span>Tanggal:</span><span id="receipt-date" class="font-semibold text-slate-700 dark:text-slate-300">-</span></div>
+                                <div class="flex justify-between"><span>No. Struk:</span><span id="receipt-number" class="font-mono font-semibold text-slate-700 dark:text-slate-300">-</span></div>
+                                <div class="flex justify-between"><span>Kasir:</span><span id="receipt-kasir-label" class="font-semibold text-slate-700 dark:text-slate-300">Kasir</span></div>
                             </div>
 
-                            <!-- Daftar Item Belanja -->
                             <div id="cart-list" class="flex-grow overflow-y-auto space-y-3 py-4 text-xs">
                                 <div class="text-center text-slate-400 py-10 italic">Keranjang kosong.</div>
                             </div>
 
-                            <!-- Kalkulasi & Tombol Bayar -->
                             <div class="border-t dark:border-iosGray-900 pt-4 space-y-4">
                                 <div class="flex justify-between items-center">
                                     <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Tagihan</span>
                                     <span id="cart-total" class="text-2xl font-black text-slate-900 dark:text-white">$0.00</span>
                                 </div>
 
-                                <button onclick="processPayment()" class="relative overflow-hidden w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold transition-all active:scale-95 shadow-lg shadow-indigo-600/25 text-xs tracking-wider flex items-center justify-center gap-2">
+                                <button onclick="processPayment(event)" class="relative overflow-hidden w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold transition-all active:scale-95 shadow-lg shadow-indigo-600/25 text-xs tracking-wider flex items-center justify-center gap-2">
                                     <i data-lucide="shield-check" class="w-4 h-4"></i> PROSES PEMBAYARAN
                                 </button>
                             </div>
                         </div>
 
-                        <!-- Log Riwayat Singkat -->
                         <div class="p-5 rounded-3xl glass-premium shadow-sm space-y-3">
                             <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Riwayat Penjualan Terakhir</h4>
                             <div id="history-list" class="max-h-48 overflow-y-auto space-y-2 text-[11px]">
@@ -297,7 +281,6 @@
                     </div>
                 </div>
 
-                <!-- Area Grid KDS -->
                 <div id="prep-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Diisi Dinamis -->
                 </div>
@@ -307,23 +290,37 @@
             <section id="tab-dash" class="tab-content hidden space-y-8">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-extrabold tracking-tight">Finances Overview</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Ikhtisar performa dan profitabilitas masing-masing unit bisnis Anda.</p>
+                        <h2 class="text-2xl font-extrabold tracking-tight">Finances Overview <span id="dash-category-title" class="text-indigo-600 dark:text-indigo-400"></span></h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Klik filter waktu atau kategori di bawah untuk menggali analitik bisnis Anda secara presisi.</p>
                     </div>
                     <div class="flex gap-2">
                         <button onclick="exportData(event)" class="relative overflow-hidden px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl text-xs font-bold transition-all shadow-md active:scale-95 flex items-center gap-1.5">
-                            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Excel Laporan
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Excel
                         </button>
                     </div>
                 </div>
 
-                <!-- Kisi Metrik Keuangan Global -->
+                <!-- TIME FILTER BAR -->
+                <div class="flex flex-wrap gap-2 mb-2 bg-slate-100 dark:bg-iosGray-900 p-1.5 rounded-2xl w-fit">
+                    <button onclick="setDashTimeFilter('today', event)" id="dtf-today" class="time-filter-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-iosGray-800 text-indigo-600 dark:text-indigo-400 shadow-sm transition-all">Hari Ini</button>
+                    <button onclick="setDashTimeFilter('week', event)" id="dtf-week" class="time-filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 transition-all">Minggu Ini</button>
+                    <button onclick="setDashTimeFilter('month', event)" id="dtf-month" class="time-filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 transition-all">Bulan Ini</button>
+                    <button onclick="setDashTimeFilter('year', event)" id="dtf-year" class="time-filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 transition-all">Tahun Ini</button>
+                    <button onclick="setDashTimeFilter('all', event)" id="dtf-all" class="time-filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 transition-all">Semua Waktu</button>
+                </div>
+
+                <!-- KINERJA PER KATEGORI (UNIT BISNIS) - CLICKABLE -->
+                <div class="space-y-4">
+                    <div id="category-performance-cards" class="grid grid-cols-2 md:grid-cols-5 gap-3">
+                        <!-- Cards dinamis dari JS -->
+                    </div>
+                </div>
+
+                <!-- Kisi Metrik Keuangan Global / Terfilter -->
                 <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-cyan-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-cyan-500/10 dark:text-cyan-400/5">
-                            <i data-lucide="piggy-bank" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Modal Awal (Kapitál)</p>
+                        <div class="absolute top-4 right-4 text-cyan-500/10 dark:text-cyan-400/5"><i data-lucide="piggy-bank" class="w-8 h-8"></i></div>
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Modal Awal</p>
                         <div class="flex items-center gap-1 mt-1">
                             <span class="text-xl font-extrabold text-slate-800 dark:text-white">$</span>
                             <input type="number" step="10" id="dash-modal-input" oninput="updateModalAwal(this.value)" class="w-full bg-transparent border-b border-dashed border-slate-300 dark:border-slate-700 text-xl font-extrabold text-slate-800 dark:text-white outline-none focus:border-cyan-500" value="5000">
@@ -331,72 +328,47 @@
                     </div>
 
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-indigo-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-indigo-500/10 dark:text-indigo-400/5">
-                            <i data-lucide="trending-up" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Global Omzet (Receita)</p>
+                        <div class="absolute top-4 right-4 text-indigo-500/10 dark:text-indigo-400/5"><i data-lucide="trending-up" class="w-8 h-8"></i></div>
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Omzet (Income)</p>
                         <h3 id="dash-income" class="text-2xl font-extrabold mt-1 text-slate-800 dark:text-white">$0.00</h3>
-                        <p class="text-[10px] text-indigo-500 mt-1 font-semibold">Total Pendapatan Kotor</p>
                     </div>
 
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-rose-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-rose-500/10 dark:text-rose-400/5">
-                            <i data-lucide="credit-card" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Global Expenses (Despesa)</p>
+                        <div class="absolute top-4 right-4 text-rose-500/10 dark:text-rose-400/5"><i data-lucide="credit-card" class="w-8 h-8"></i></div>
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Total Expense</p>
                         <h3 id="dash-expense" class="text-2xl font-extrabold mt-1 text-rose-500">$0.00</h3>
-                        <p class="text-[10px] text-slate-400 mt-1">Total Biaya Operasional + HPP</p>
                     </div>
 
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-emerald-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-emerald-500/10 dark:text-emerald-400/5">
-                            <i data-lucide="wallet" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Global Net Profit (Lucru)</p>
+                        <div class="absolute top-4 right-4 text-emerald-500/10 dark:text-emerald-400/5"><i data-lucide="wallet" class="w-8 h-8"></i></div>
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Net Profit</p>
                         <h3 id="dash-profit" class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">$0.00</h3>
-                        <p class="text-[10px] text-slate-400 mt-1">Laba Bersih Riil Usaha</p>
                     </div>
 
-                    <!-- Kartu Analisis ROI -->
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-purple-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-purple-500/10 dark:text-purple-400/5">
-                            <i data-lucide="percent" class="w-8 h-8"></i>
-                        </div>
+                        <div class="absolute top-4 right-4 text-purple-500/10 dark:text-purple-400/5"><i data-lucide="percent" class="w-8 h-8"></i></div>
                         <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">ROI (%)</p>
                         <h3 id="dash-roi" class="text-2xl font-extrabold mt-1 text-purple-600 dark:text-purple-400">0.00%</h3>
-                        <p id="dash-roi-sub" class="text-[10px] text-slate-400 mt-1">Laju Balik Modal</p>
                     </div>
 
-                    <!-- Kartu Target BEP -->
                     <div class="p-5 rounded-3xl glass-premium shadow-sm border-l-4 border-orange-500 relative overflow-hidden">
-                        <div class="absolute top-4 right-4 text-orange-500/10 dark:text-orange-400/5">
-                            <i data-lucide="target" class="w-8 h-8"></i>
-                        </div>
-                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Target Balik Modal</p>
+                        <div class="absolute top-4 right-4 text-orange-500/10 dark:text-orange-400/5"><i data-lucide="target" class="w-8 h-8"></i></div>
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Target BEP</p>
                         <h3 id="dash-bep" class="text-2xl font-extrabold mt-1 text-orange-600 dark:text-orange-400">0 Unit</h3>
-                        <p class="text-[10px] text-slate-400 mt-1">Sisa penjualan tutup modal</p>
-                    </div>
-                </div>
-
-                <!-- KINERJA PER KATEGORI (UNIT BISNIS) -->
-                <div class="space-y-4">
-                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Performa per Unit Bisnis</h4>
-                    <div id="category-performance-cards" class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                        <!-- Cards dinamis dari JS -->
                     </div>
                 </div>
 
                 <!-- Analisis Grafik Dinamis -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="p-6 rounded-3xl glass-premium shadow-sm">
-                        <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Omzet vs Pengeluaran per Unit</h4>
+                        <h4 id="chart-sales-title" class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Omzet vs Pengeluaran per Kategori</h4>
                         <div class="h-64 relative flex items-center justify-center">
                             <canvas id="chartSales"></canvas>
                         </div>
                     </div>
                     <div class="p-6 rounded-3xl glass-premium shadow-sm flex flex-col justify-between">
                         <div>
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Distribusi Pengeluaran</h4>
+                            <h4 id="chart-expenses-title" class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-4">Distribusi Pengeluaran</h4>
                             <div class="h-64 relative flex items-center justify-center">
                                 <canvas id="chartExpenses"></canvas>
                             </div>
@@ -422,22 +394,22 @@
                                 <span>Pengeluaran Cepat</span>
                             </h4>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                                <button onclick="addQuickExpense('Makan Staf', 12.00, 'cafe', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2">
+                                <button onclick="addQuickExpense('Makan Staf', 12.00, 'cafe', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2 relative overflow-hidden">
                                     <span class="text-rose-500"><i data-lucide="utensils" class="w-5 h-5"></i></span>
                                     <span class="font-bold text-xs">Makan Cafe</span>
                                     <span class="text-rose-500 font-bold text-[11px]">$12.00</span>
                                 </button>
-                                <button onclick="addQuickExpense('Pulsa & Net', 8.50, 'umum', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2">
+                                <button onclick="addQuickExpense('Pulsa & Net', 8.50, 'umum', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2 relative overflow-hidden">
                                     <span class="text-sky-500"><i data-lucide="smartphone" class="w-5 h-5"></i></span>
                                     <span class="font-bold text-xs">Pulsa Umum</span>
                                     <span class="text-rose-500 font-bold text-[11px]">$8.50</span>
                                 </button>
-                                <button onclick="addQuickExpense('Laundry GH', 15.00, 'guesthouse', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2">
+                                <button onclick="addQuickExpense('Laundry GH', 15.00, 'guesthouse', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2 relative overflow-hidden">
                                     <span class="text-indigo-500"><i data-lucide="shirt" class="w-5 h-5"></i></span>
                                     <span class="font-bold text-xs">Laundry GH</span>
                                     <span class="text-rose-500 font-bold text-[11px]">$15.00</span>
                                 </button>
-                                <button onclick="addQuickExpense('Obat Kolam', 20.00, 'pool', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2">
+                                <button onclick="addQuickExpense('Obat Kolam', 20.00, 'pool', event)" class="p-4 rounded-2xl bg-white dark:bg-iosGray-900 border dark:border-iosGray-800 hover:border-rose-500 text-left flex flex-col gap-2 relative overflow-hidden">
                                     <span class="text-emerald-500"><i data-lucide="droplets" class="w-5 h-5"></i></span>
                                     <span class="font-bold text-xs">Obat Kolam</span>
                                     <span class="text-rose-500 font-bold text-[11px]">$20.00</span>
@@ -471,7 +443,7 @@
                                     <input type="number" step="0.01" id="ex-amt" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2.5 rounded-xl text-sm outline-none text-slate-800 dark:text-slate-100">
                                 </div>
                             </div>
-                            <button onclick="addCustomExpense(event)" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                            <button onclick="addCustomExpense(event)" class="w-full py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 relative overflow-hidden">
                                 <i data-lucide="plus" class="w-4 h-4"></i> Simpan Pengeluaran
                             </button>
                         </div>
@@ -526,7 +498,7 @@
                                     <input type="number" step="0.01" id="p-hpp" placeholder="0.00" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none text-slate-800 dark:text-slate-100">
                                 </div>
                             </div>
-                            <button onclick="addProduct(event)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md">
+                            <button onclick="addProduct(event)" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md relative overflow-hidden">
                                 Daftarkan & Generate QR
                             </button>
                         </div>
@@ -539,7 +511,6 @@
                                 <i data-lucide="key" class="w-4 h-4 text-emerald-500"></i>
                                 <span>Ubah Passcode Peran Keamanan</span>
                             </h4>
-                            <p class="text-xs text-slate-400">Perbarui PIN pengaman untuk masing-masing peran.</p>
                             <div class="space-y-3">
                                 <div class="grid grid-cols-3 gap-2">
                                     <div class="space-y-1">
@@ -555,7 +526,7 @@
                                         <input type="password" maxlength="4" id="pin-owner-input" class="w-full border p-2 rounded-xl text-center tracking-widest text-slate-800 font-bold">
                                     </div>
                                 </div>
-                                <button onclick="saveAllPasscodes(event)" class="w-full py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold transition-all">
+                                <button onclick="saveAllPasscodes(event)" class="w-full py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold transition-all relative overflow-hidden">
                                     Perbarui Semua Passcode
                                 </button>
                             </div>
@@ -565,7 +536,7 @@
                             <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2 text-rose-500">
                                 <i data-lucide="alert-triangle" class="w-4 h-4"></i> Zona Bahaya
                             </h4>
-                            <button onclick="resetProducts(event)" class="w-full py-2 bg-rose-600 text-white rounded-xl text-xs font-bold">Reset Semua Catalog Ke Default</button>
+                            <button onclick="resetProducts(event)" class="w-full py-2 bg-rose-600 text-white rounded-xl text-xs font-bold relative overflow-hidden">Reset Semua Catalog Ke Default</button>
                         </div>
                     </div>
                 </div>
@@ -575,54 +546,28 @@
                 </div>
             </section>
 
-            <!-- ==================== TAB: GLOSARIUM BAHASA BISNIS ==================== -->
+            <!-- ==================== TAB: GLOSARIUM ==================== -->
             <section id="tab-guide" class="tab-content hidden space-y-6">
+                <!-- Keep minimal for brevity, unchanged functionality -->
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h2 class="text-2xl font-extrabold tracking-tight">Kamus & Glosarium Finansial</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Penjelasan terminologi bisnis penting yang sering digunakan dalam operasional.</p>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-indigo-500 flex items-center justify-center"><i data-lucide="trending-up" class="w-5 h-5"></i></span>
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Income (Receita / Osan-tama)</h4>
+                            <span class="text-indigo-500"><i data-lucide="trending-up" class="w-5 h-5"></i></span>
+                            <h4 class="text-sm font-bold">Income (Receita / Osan-tama)</h4>
                         </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Total omzet pendapatan kotor yang diperoleh dari penjualan produk makanan, penyewaan kamar, maupun sewa ruang pertemuan sebelum dikurangi pengeluaran.
-                        </p>
+                        <p class="text-xs text-slate-500">Total omzet pendapatan kotor yang masuk.</p>
                     </div>
-
                     <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
                         <div class="flex items-center gap-2">
-                            <span class="text-rose-500 flex items-center justify-center"><i data-lucide="trending-down" class="w-5 h-5"></i></span>
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Expense (Despesa / Osan-sai)</h4>
+                            <span class="text-rose-500"><i data-lucide="trending-down" class="w-5 h-5"></i></span>
+                            <h4 class="text-sm font-bold">Expense (Despesa / Osan-sai)</h4>
                         </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Segala bentuk pembiayaan langsung dan tidak langsung untuk mendukung kelancaran operasional (wifi, kurir, kebersihan, listrik, dll).
-                        </p>
-                    </div>
-
-                    <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-amber-500 flex items-center justify-center"><i data-lucide="coins" class="w-5 h-5"></i></span>
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">COGS / HPP (Modal Produtu)</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Adalah nilai modal bahan baku yang keluar langsung untuk memproduksi atau menyiapkan layanan ketika transaksi tersebut dibeli oleh pelanggan.
-                        </p>
-                    </div>
-
-                    <div class="p-6 rounded-3xl glass-premium shadow-sm space-y-3">
-                        <div class="flex items-center gap-2">
-                            <span class="text-emerald-500 flex items-center justify-center"><i data-lucide="award" class="w-5 h-5"></i></span>
-                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Net Profit (Lucru Líquido)</h4>
-                        </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-                            Pendapatan bersih yang diperoleh setelah pendapatan dikurangi total modal HPP produk dan pengeluaran operasional.
-                        </p>
+                        <p class="text-xs text-slate-500">Pengeluaran untuk biaya operasional.</p>
                     </div>
                 </div>
             </section>
@@ -630,7 +575,7 @@
         </main>
     </div>
 
-    <!-- ==================== GATES: SKRIN KUNCI iOS (Un-escapable Lockscreen Overlay) ==================== -->
+    <!-- ==================== GATES: SKRIN KUNCI iOS ==================== -->
     <div id="global-lockscreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-3xl transition-all duration-500">
         <div class="flex flex-col items-center max-w-sm w-full p-6 text-center text-white">
             <div class="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center mb-4 shadow-xl shadow-indigo-500/30">
@@ -639,7 +584,6 @@
             <h3 class="text-xl font-black tracking-tight mb-1 text-slate-50">Sistem POS Terkunci</h3>
             <p class="text-xs text-slate-400 mb-6">Masukkan PIN keamanan peran Anda untuk melanjutkan.</p>
             
-            <!-- Indikator PIN Bulat -->
             <div class="flex gap-4 mb-8 justify-center">
                 <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500 transition-all duration-200"></div>
                 <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500 transition-all duration-200"></div>
@@ -647,29 +591,25 @@
                 <div class="pin-dot w-3.5 h-3.5 rounded-full border border-slate-500 transition-all duration-200"></div>
             </div>
             
-            <!-- Keypad Angka Bulat -->
             <div class="grid grid-cols-3 gap-4 w-64 mx-auto mb-6">
-                <button onclick="pressPin('1')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">1</button>
-                <button onclick="pressPin('2')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">2</button>
-                <button onclick="pressPin('3')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">3</button>
-                <button onclick="pressPin('4')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">4</button>
-                <button onclick="pressPin('5')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">5</button>
-                <button onclick="pressPin('6')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">6</button>
-                <button onclick="pressPin('7')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">7</button>
-                <button onclick="pressPin('8')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">8</button>
-                <button onclick="pressPin('9')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">9</button>
+                <button onclick="pressPin('1')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">1</button>
+                <button onclick="pressPin('2')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">2</button>
+                <button onclick="pressPin('3')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">3</button>
+                <button onclick="pressPin('4')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">4</button>
+                <button onclick="pressPin('5')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">5</button>
+                <button onclick="pressPin('6')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">6</button>
+                <button onclick="pressPin('7')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">7</button>
+                <button onclick="pressPin('8')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">8</button>
+                <button onclick="pressPin('9')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">9</button>
                 <button onclick="pressPinBackspace()" class="w-16 h-16 rounded-full bg-transparent text-slate-400 hover:text-white flex justify-center items-center transition-all"><i data-lucide="delete" class="w-5 h-5"></i></button>
-                <button onclick="pressPin('0')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 flex items-center justify-center shadow">0</button>
+                <button onclick="pressPin('0')" class="w-16 h-16 rounded-full bg-slate-900/60 hover:bg-slate-800 active:bg-slate-700 transition-all font-semibold text-2xl border border-slate-800 shadow">0</button>
                 <button onclick="clearPin()" class="w-16 h-16 rounded-full bg-transparent text-rose-500 hover:text-rose-400 font-bold text-xs uppercase tracking-wider flex items-center justify-center">Hapus</button>
             </div>
-            
-            <p class="text-[10px] text-slate-500 italic max-w-xs mt-2">
-                Tip Demo: PIN Owner: 1234 | PIN Kasir: 4321 | PIN Dapur: 5555
-            </p>
+            <p class="text-[10px] text-slate-500 italic max-w-xs mt-2">PIN Owner: 1234 | Kasir: 4321 | Dapur: 5555</p>
         </div>
     </div>
 
-    <!-- Formulir Reservasi Dynamic Booking dengan Fitur Hitung Tanggal -->
+    <!-- Booking Modal -->
     <div id="booking-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
         <div class="glass-premium p-6 rounded-3xl max-w-sm w-full border dark:border-iosGray-850 shadow-2xl text-slate-850 dark:text-white">
             <div class="flex justify-between items-center mb-4">
@@ -677,9 +617,7 @@
                     <i data-lucide="calendar-plus" class="w-4 h-4 text-indigo-500"></i>
                     <span id="booking-modal-title">Detail Reservasi</span>
                 </h4>
-                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
+                <button onclick="closeBookingModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
             <div class="space-y-3">
                 <div class="space-y-1">
@@ -688,11 +626,11 @@
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div class="space-y-1">
-                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400" id="b-date-label">Check-in / Tanggal</label>
+                        <label class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400" id="b-date-label">Tanggal</label>
                         <input type="date" id="b-date" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-xs outline-none text-slate-800 dark:text-slate-100">
                     </div>
                     <div class="space-y-1">
-                        <label id="b-duration-label" class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Durasi (Malam)</label>
+                        <label id="b-duration-label" class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Durasi</label>
                         <input type="number" min="1" id="b-duration" value="1" class="w-full bg-slate-100/50 dark:bg-iosGray-900 border border-slate-200 dark:border-iosGray-800 px-3 py-2 rounded-xl text-sm outline-none text-slate-800 dark:text-slate-100">
                     </div>
                 </div>
@@ -704,6 +642,7 @@
         </div>
     </div>
 
+    <!-- Confirm Modal -->
     <div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm hidden">
         <div class="glass-premium p-6 rounded-3xl max-w-xs w-full text-center text-slate-850 dark:text-white">
             <h4 id="confirm-title" class="font-bold text-sm">Konfirmasi</h4>
@@ -725,15 +664,51 @@
     </div>
 
     <script>
+        // ==================== GLOBAL ESSENTIALS (DIKUNCI DI AWAL UNTUK MENCEGAH ERROR) ====================
+        // Definisi Global Paling Atas untuk Mencegah ReferenceError
+        function addRipple(e) {
+            if (!e || !e.currentTarget) return;
+            const btn = e.currentTarget;
+            const ripple = document.createElement("span");
+            const d = Math.max(btn.offsetWidth, btn.offsetHeight);
+            const rect = btn.getBoundingClientRect();
+            
+            const left = e.clientX ? e.clientX - rect.left : btn.offsetWidth / 2;
+            const top = e.clientY ? e.clientY - rect.top : btn.offsetHeight / 2;
+            
+            ripple.style.width = ripple.style.height = d + "px";
+            ripple.style.left = (left - d/2) + "px";
+            ripple.style.top = (top - d/2) + "px";
+            ripple.classList.add("ripple");
+            
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 500);
+        }
+
+        // ==================== PENANGANAN IKON & QR AMAN ====================
+        // Memaksa sistem mencoba render ikon berkali-kali jika CDN terhambat
+        function safeCreateIcons() {
+            try {
+                if (window.lucide) {
+                    window.lucide.createIcons({ nameAttr: 'data-lucide' });
+                } else {
+                    // Retry setelah 500ms jika CDN Lambat
+                    setTimeout(safeCreateIcons, 500);
+                }
+            } catch (error) {
+                console.warn("Lucide Icons rendering tertunda...", error);
+            }
+        }
+
+        // ==================== STATE MANAGEMENT ====================
         const defaultState = {
-            currentRole: 'locked', // Status terkunci saat inisialisasi awal
-            passcode: '1234',      // Owner
-            passcodeCashier: '4321', // Kasir
-            passcodePrep: '5555',    // Dapur
+            currentRole: 'locked', 
+            passcode: '1234',      
+            passcodeCashier: '4321', 
+            passcodePrep: '5555',    
             modalAwal: 5000.00,
             products: [
                 { name: 'Kopi Susu Aren', price: 3.50, hpp: 1.20, sku: 'SN-778231', category: 'cafe' },
-                { name: 'Croissant Coklat', price: 4.00, hpp: 1.80, sku: 'SN-443912', category: 'cafe' },
                 { name: 'Kamar Standard (GH)', price: 35.00, hpp: 8.00, sku: 'SN-GH2001', category: 'guesthouse' },
                 { name: 'Aula Utama', price: 150.00, hpp: 25.00, sku: 'SN-VN4001', category: 'venue' },
                 { name: 'Tiket Kolam Renang', price: 5.00, hpp: 0.50, sku: 'SN-PL7001', category: 'pool' }
@@ -750,19 +725,26 @@
         let currentBookingProduct = null;
         let currentPinInput = "";
         let targetTabAfterUnlock = "";
+        
+        // Filter Global Dashboard Variables
+        let dashTimeFilter = 'all';
+        let dashCategoryFilter = 'all';
         const charts = {};
 
         function loadStateFromDB() {
             try {
-                const raw = localStorage.getItem('compras_simples_premium_db_v3');
+                const raw = localStorage.getItem('compras_simples_premium_v5');
                 if (raw) {
                     state = JSON.parse(raw);
-                    state.currentRole = 'locked'; // Selalu kunci sistem saat reload atau buka tab baru
+                    state.currentRole = 'locked'; 
                     state.cart = []; 
                     if (!state.activeOrders) state.activeOrders = [];
-                    // Migrasi passcode baru ke database lokal jika belum ada
                     if (!state.passcodeCashier) state.passcodeCashier = '4321';
                     if (!state.passcodePrep) state.passcodePrep = '5555';
+                    
+                    // Integritas data lama agar filter waktu tidak crash
+                    state.sales.forEach(s => { if(!s.dateMs) s.dateMs = Date.now(); });
+                    state.expenses.forEach(e => { if(!e.dateMs) e.dateMs = Date.now(); });
                 } else {
                     state = JSON.parse(JSON.stringify(defaultState));
                 }
@@ -772,13 +754,7 @@
         }
 
         function saveStateToDB() {
-            try { localStorage.setItem('compras_simples_premium_db_v3', JSON.stringify(state)); } catch (e) {}
-        }
-
-        function updateModalAwal(val) {
-            state.modalAwal = parseFloat(val) || 0;
-            saveStateToDB();
-            updateDashboard();
+            try { localStorage.setItem('compras_simples_premium_v5', JSON.stringify(state)); } catch (e) {}
         }
 
         function showToast(text, type = 'success') {
@@ -786,171 +762,31 @@
             toast.className = `fixed top-6 right-6 z-50 transform transition-transform duration-500 ease-out flex items-center gap-3 p-4 rounded-2xl shadow-xl glass-premium text-sm font-semibold max-w-sm border-l-4 ${type==='success'?'border-emerald-500 text-emerald-600':type==='error'?'border-rose-500 text-rose-500':'border-indigo-500 text-indigo-500'}`;
             document.getElementById('toast-text').innerText = text;
             toast.style.transform = "translateY(0)";
+            safeCreateIcons();
             setTimeout(() => { toast.style.transform = "translateY(-150%)"; }, 3000);
         }
 
-        // ==================== SYSTEM LOCK CONTROLS ====================
+        // ==================== SYSTEM LOCK & PASSCODE ====================
         function lockSystem() {
             state.currentRole = 'locked';
             saveStateToDB();
-            
-            // Sembunyikan aplikasi & munculkan lockscreen iOS
             document.getElementById('app-container').classList.add('hidden');
             document.getElementById('global-lockscreen').classList.remove('hidden');
             document.getElementById('global-lockscreen').classList.add('flex');
-            
-            currentPinInput = "";
-            updatePinDots();
-            showToast("Sistem Berhasil Dikunci", "info");
+            clearPin();
+            showToast("Sistem Terkunci", "info");
         }
 
-        function toggleRoleDropdown(event) {
-            if (event) event.stopPropagation();
-            const dd = document.getElementById('role-dropdown');
-            dd.classList.toggle('hidden');
-        }
-
-        // Tutup dropdown otomatis jika klik di luar
-        window.addEventListener('click', function() {
-            const dd = document.getElementById('role-dropdown');
-            if (dd) dd.classList.add('hidden');
-        });
-
-        function toggleRole(e) {
-            toggleRoleDropdown(e);
-        }
-
-        // ==================== PASSCODE CONTROLLER ====================
         function pressPin(num) {
             if (currentPinInput.length < 4) {
-                currentPinInput += num; 
-                updatePinDots();
-                if (currentPinInput.length === 4) {
-                    setTimeout(validatePasscode, 250);
-                }
+                currentPinInput += num; updatePinDots();
+                if (currentPinInput.length === 4) setTimeout(validatePasscode, 250);
             }
         }
-
         function pressPinBackspace() {
-            if (currentPinInput.length > 0) { 
-                currentPinInput = currentPinInput.slice(0, -1); 
-                updatePinDots(); 
-            }
+            if (currentPinInput.length > 0) { currentPinInput = currentPinInput.slice(0, -1); updatePinDots(); }
         }
-
-        function clearPin() {
-            currentPinInput = "";
-            updatePinDots();
-        }
-
-        function triggerRescueReset() {
-            state.passcode = "1234"; 
-            state.passcodeCashier = "4321";
-            state.passcodePrep = "5555";
-            saveStateToDB(); 
-            showToast("Seluruh PIN di-reset ke pengaturan pabrik!", "info"); 
-            clearPin();
-        }
-
-        function validatePasscode() {
-            if (currentPinInput === state.passcode) {
-                // Masuk sebagai Owner
-                state.currentRole = 'owner';
-                unlockAppSuccess('dash');
-            } else if (currentPinInput === state.passcodeCashier) {
-                // Masuk sebagai Kasir
-                state.currentRole = 'cashier';
-                unlockAppSuccess('pos');
-            } else if (currentPinInput === state.passcodePrep) {
-                // Masuk sebagai Staf Dapur
-                state.currentRole = 'prep';
-                unlockAppSuccess('prep');
-            } else {
-                showToast("PIN Keamanan Salah!", "error");
-                currentPinInput = ""; 
-                updatePinDots(); 
-            }
-        }
-
-        function unlockAppSuccess(targetTab) {
-            saveStateToDB();
-            showToast(`Akses Terbuka: ${state.currentRole.toUpperCase()}`, "success");
-            
-            // Sembunyikan layar kunci & tampilkan aplikasi utama
-            document.getElementById('global-lockscreen').classList.add('hidden');
-            document.getElementById('global-lockscreen').classList.remove('flex');
-            document.getElementById('app-container').classList.remove('hidden');
-            
-            updateRoleUI();
-            switchTab(targetTab);
-        }
-
-        function updateRoleUI() {
-            const badgeText = document.getElementById('role-badge-text');
-            const badgeIconContainer = document.getElementById('role-badge-icon-container');
-            const lockIndicators = document.querySelectorAll('.lock-indicator');
-            const kasirLabel = document.getElementById('receipt-kasir-label');
-
-            if (!badgeText || !badgeIconContainer) return;
-
-            // Navigasi element desk & mobile
-            const navPos = document.getElementById('nav-btn-pos');
-            const navPrep = document.getElementById('nav-btn-prep');
-            const navDash = document.getElementById('nav-btn-dash');
-            const navExpense = document.getElementById('nav-btn-expense');
-            const navSettings = document.getElementById('nav-btn-settings');
-            const navGuide = document.getElementById('nav-btn-guide');
-
-            const mobPos = document.getElementById('mob-btn-pos');
-            const mobPrep = document.getElementById('mob-btn-prep');
-            const mobDash = document.getElementById('mob-btn-dash');
-            const mobExpense = document.getElementById('mob-btn-expense');
-            const mobSettings = document.getElementById('mob-btn-settings');
-
-            const allNavs = [navPos, navPrep, navDash, navExpense, navSettings, navGuide, mobPos, mobPrep, mobDash, mobExpense, mobSettings];
-            allNavs.forEach(nav => { if(nav) nav.classList.add('hidden'); });
-
-            if (state.currentRole === 'owner') {
-                badgeText.innerText = "Owner Mode";
-                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800";
-                badgeIconContainer.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>';
-                lockIndicators.forEach(l => l.classList.add('hidden'));
-                if (kasirLabel) kasirLabel.innerText = "Owner/Admin";
-
-                allNavs.forEach(nav => { if(nav) nav.classList.remove('hidden'); });
-
-            } else if (state.currentRole === 'prep') {
-                badgeText.innerText = "Dapur Mode";
-                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-rose-100 text-rose-800 border border-rose-200 shadow-sm dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800";
-                badgeIconContainer.innerHTML = '<i data-lucide="chef-hat" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400"></i>';
-                if (kasirLabel) kasirLabel.innerText = "Staf Dapur";
-
-                if(navPrep) navPrep.classList.remove('hidden');
-                if(navGuide) navGuide.classList.remove('hidden');
-                if(mobPrep) mobPrep.classList.remove('hidden');
-
-            } else {
-                badgeText.innerText = "Kasir Mode";
-                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold transition-all flex items-center gap-1.5 bg-slate-100 dark:bg-iosGray-900 border shadow-sm dark:border-iosGray-800";
-                badgeIconContainer.innerHTML = '<i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>';
-                lockIndicators.forEach(l => l.classList.remove('hidden'));
-                if (kasirLabel) kasirLabel.innerText = "Kasir";
-
-                if(navPos) navPos.classList.remove('hidden');
-                if(navGuide) navGuide.classList.remove('hidden');
-                if(mobPos) mobPos.classList.remove('hidden');
-            }
-
-            // Muat isian PIN lama di menu settings agar Owner bisa lihat
-            const pC = document.getElementById('pin-cashier-input');
-            const pP = document.getElementById('pin-prep-input');
-            const pO = document.getElementById('pin-owner-input');
-            if(pC) pC.value = state.passcodeCashier;
-            if(pP) pP.value = state.passcodePrep;
-            if(pO) pO.value = state.passcode;
-
-            safeCreateIcons();
-        }
+        function clearPin() { currentPinInput = ""; updatePinDots(); }
 
         function updatePinDots() {
             document.querySelectorAll('.pin-dot').forEach((dot, idx) => {
@@ -958,48 +794,75 @@
             });
         }
 
-        // Simpan modifikasi PIN Keamanan Multi-User dari Settings
-        function saveAllPasscodes(e) {
-            if(e) addRipple(e);
-            const pC = document.getElementById('pin-cashier-input').value;
-            const pP = document.getElementById('pin-prep-input').value;
-            const pO = document.getElementById('pin-owner-input').value;
-
-            if(pC.length !== 4 || pP.length !== 4 || pO.length !== 4) {
-                return showToast("Gagal! Semua PIN keamanan wajib berupa 4 digit angka.", "error");
+        function validatePasscode() {
+            if (currentPinInput === state.passcode) {
+                state.currentRole = 'owner'; unlockAppSuccess('dash');
+            } else if (currentPinInput === state.passcodeCashier) {
+                state.currentRole = 'cashier'; unlockAppSuccess('pos');
+            } else if (currentPinInput === state.passcodePrep) {
+                state.currentRole = 'prep'; unlockAppSuccess('prep');
+            } else {
+                showToast("PIN Salah!", "error"); clearPin(); 
             }
+        }
 
-            state.passcodeCashier = pC;
-            state.passcodePrep = pP;
-            state.passcode = pO;
-            
+        function unlockAppSuccess(targetTab) {
             saveStateToDB();
-            showToast("Seluruh PIN keamanan berhasil diperbarui!", "success");
+            showToast(`Akses Terbuka: ${state.currentRole.toUpperCase()}`, "success");
+            document.getElementById('global-lockscreen').classList.add('hidden');
+            document.getElementById('global-lockscreen').classList.remove('flex');
+            document.getElementById('app-container').classList.remove('hidden');
+            updateRoleUI();
+            switchTab(targetTab);
+        }
+
+        function updateRoleUI() {
+            const badgeText = document.getElementById('role-badge-text');
+            const badgeIconContainer = document.getElementById('role-badge-icon-container');
+            const allNavs = document.querySelectorAll('.nav-btn, .mobile-nav-btn');
+            allNavs.forEach(nav => nav.classList.add('hidden'));
+
+            if (!badgeText) return;
+
+            if (state.currentRole === 'owner') {
+                badgeText.innerText = "Owner Mode";
+                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 bg-emerald-100 text-emerald-800 border border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800";
+                badgeIconContainer.innerHTML = '<i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>';
+                allNavs.forEach(nav => nav.classList.remove('hidden'));
+
+            } else if (state.currentRole === 'prep') {
+                badgeText.innerText = "Dapur Mode";
+                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 bg-rose-100 text-rose-800 border border-rose-200 dark:bg-rose-950/40 dark:text-rose-400 dark:border-rose-800";
+                badgeIconContainer.innerHTML = '<i data-lucide="chef-hat" class="w-3.5 h-3.5 text-rose-600 dark:text-rose-400"></i>';
+                
+                ['nav-btn-prep', 'nav-btn-guide', 'mob-btn-prep', 'mob-btn-guide'].forEach(id => {
+                    const el = document.getElementById(id); if(el) el.classList.remove('hidden');
+                });
+            } else {
+                badgeText.innerText = "Kasir Mode";
+                document.getElementById('role-badge').className = "px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-1.5 bg-slate-100 dark:bg-iosGray-900 border dark:border-iosGray-800";
+                badgeIconContainer.innerHTML = '<i data-lucide="user" class="w-3.5 h-3.5 text-slate-500"></i>';
+                
+                ['nav-btn-pos', 'nav-btn-guide', 'mob-btn-pos', 'mob-btn-guide'].forEach(id => {
+                    const el = document.getElementById(id); if(el) el.classList.remove('hidden');
+                });
+            }
+            safeCreateIcons();
         }
 
         function switchTab(tabId, e) {
-            // Validasi keras hak akses sebelum memindahkan tab
-            if (state.currentRole === 'cashier' && tabId !== 'pos' && tabId !== 'guide') {
-                showToast("Akses Ditolak! Peran Anda tidak memiliki izin.", "error");
-                return;
-            }
-            if (state.currentRole === 'prep' && tabId !== 'prep' && tabId !== 'guide') {
-                showToast("Akses Ditolak! Peran Anda tidak memiliki izin.", "error");
-                return;
-            }
+            if(e) addRipple(e);
+            if (state.currentRole === 'cashier' && tabId !== 'pos' && tabId !== 'guide') return showToast("Akses Ditolak!", "error");
+            if (state.currentRole === 'prep' && tabId !== 'prep' && tabId !== 'guide') return showToast("Akses Ditolak!", "error");
 
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 transition-all duration-300 flex items-center gap-1";
-            });
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 transition-all flex items-center gap-1");
             const activeDesktop = document.getElementById(`nav-btn-${tabId}`);
-            if (activeDesktop) activeDesktop.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-iosGray-800 transition-all duration-300 shadow-sm flex items-center gap-1";
+            if (activeDesktop) activeDesktop.className = "nav-btn px-4 py-1.5 rounded-xl text-sm font-semibold text-indigo-600 dark:text-indigo-400 bg-white dark:bg-iosGray-800 shadow-sm flex items-center gap-1";
 
-            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-                btn.className = "mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400 relative";
-            });
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => btn.className = "mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-slate-400 relative");
             const activeMobile = document.getElementById(`mob-btn-${tabId}`);
             if (activeMobile) activeMobile.className = "mobile-nav-btn flex flex-col items-center gap-1 text-[10px] font-bold text-indigo-600 relative";
 
@@ -1013,6 +876,219 @@
             setTimeout(renderCharts, 100);
         }
 
+        // ==================== DASHBOARD FILTER & LOGIC ====================
+        function isWithinTimeFilter(timestampMs) {
+            if(dashTimeFilter === 'all') return true;
+            if(!timestampMs) return true; // Fallback untuk data lama
+            
+            const now = Date.now();
+            const diff = now - timestampMs;
+            const dayMs = 24 * 60 * 60 * 1000;
+            
+            if(dashTimeFilter === 'today') return diff <= dayMs;
+            if(dashTimeFilter === 'week') return diff <= 7 * dayMs;
+            if(dashTimeFilter === 'month') return diff <= 30 * dayMs;
+            if(dashTimeFilter === 'year') return diff <= 365 * dayMs;
+            return true;
+        }
+
+        function setDashTimeFilter(filter, e) {
+            if(e) addRipple(e);
+            dashTimeFilter = filter;
+            
+            // Update UI buttons
+            document.querySelectorAll('.time-filter-btn').forEach(b => {
+                b.className = "time-filter-btn px-4 py-1.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 transition-all";
+            });
+            document.getElementById(`dtf-${filter}`).className = "time-filter-btn px-4 py-1.5 rounded-xl text-xs font-bold bg-white dark:bg-iosGray-800 text-indigo-600 dark:text-indigo-400 shadow-sm transition-all";
+            
+            updateDashboard();
+        }
+
+        function setDashCategoryFilter(cat) {
+            // Toggle filter on or off
+            if(dashCategoryFilter === cat) {
+                dashCategoryFilter = 'all';
+            } else {
+                dashCategoryFilter = cat;
+            }
+            updateDashboard();
+        }
+
+        function updateModalAwal(val) {
+            state.modalAwal = parseFloat(val) || 0;
+            saveStateToDB();
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // 1. Dapatkan data yang hanya lolos filter WAKTU
+            const filteredSales = state.sales.filter(s => isWithinTimeFilter(s.dateMs));
+            const filteredExpenses = state.expenses.filter(e => isWithinTimeFilter(e.dateMs));
+
+            // 2. Hitung performa mentah per KATEGORI (untuk ditampilkan di kartu yang bisa diklik)
+            let catData = {
+                cafe: { inc: 0, exp: 0, label: "Cafe", icon: "coffee" },
+                guesthouse: { inc: 0, exp: 0, label: "Kamar", icon: "bed" },
+                venue: { inc: 0, exp: 0, label: "Venue", icon: "building" },
+                pool: { inc: 0, exp: 0, label: "Pool", icon: "waves" },
+                umum: { inc: 0, exp: 0, label: "Umum", icon: "briefcase" }
+            };
+
+            filteredSales.forEach(sale => {
+                if(sale.cartData) { 
+                    sale.cartData.forEach(item => { 
+                        let c = item.category || 'umum'; 
+                        if(catData[c]) {
+                            catData[c].inc += (item.price * item.qty); 
+                            catData[c].exp += (item.hpp * item.qty); 
+                        }
+                    }); 
+                } else { 
+                    catData['umum'].inc += sale.total; 
+                    catData['umum'].exp += sale.hpp; 
+                }
+            });
+
+            filteredExpenses.forEach(ex => { 
+                let c = ex.category || 'umum'; 
+                if(catData[c]) catData[c].exp += ex.amt; 
+            });
+
+            // 3. Render Kartu Kategori (BISA DIKLIK)
+            const perfCards = document.getElementById('category-performance-cards');
+            if(perfCards) {
+                perfCards.innerHTML = Object.keys(catData).map(k => {
+                    let d = catData[k];
+                    let profit = d.inc - d.exp;
+                    let isActive = dashCategoryFilter === k;
+                    let activeClasses = isActive ? "ring-2 ring-indigo-500 scale-[1.02] shadow-md bg-indigo-50 dark:bg-indigo-950/20" : "bg-white dark:bg-iosGray-900 border border-transparent dark:border-iosGray-800 hover:scale-[1.01]";
+                    
+                    return `
+                    <button onclick="setDashCategoryFilter('${k}')" class="p-3 rounded-2xl text-center flex flex-col justify-between cursor-pointer transition-all duration-300 ${activeClasses}">
+                        <div class="flex justify-center text-${isActive?'indigo':'slate'}-400 mb-2">
+                            <i data-lucide="${d.icon}" class="w-6 h-6"></i>
+                        </div>
+                        <h5 class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">${d.label}</h5>
+                        <div class="space-y-1 text-[10px] w-full border-t border-slate-100 dark:border-iosGray-800 pt-2">
+                            <div class="flex justify-between"><span>In:</span> <span class="font-bold text-emerald-500">$${d.inc.toFixed(0)}</span></div>
+                            <div class="flex justify-between"><span>Ex:</span> <span class="font-bold text-rose-500">$${d.exp.toFixed(0)}</span></div>
+                            <div class="flex justify-between font-bold border-t border-slate-100 dark:border-iosGray-800 pt-1 mt-1"><span>Net:</span> <span class="${profit >= 0 ? 'text-emerald-500' : 'text-rose-500'}">$${profit.toFixed(0)}</span></div>
+                        </div>
+                    </button>
+                    `;
+                }).join('');
+            }
+
+            // 4. Hitung Metrik Global Teratas berdasarkan Kategori yang Difilter
+            let finalInc = 0, finalExp = 0, finalNet = 0;
+            
+            if (dashCategoryFilter === 'all') {
+                document.getElementById('dash-category-title').innerText = "(Semua Unit)";
+                document.getElementById('chart-sales-title').innerText = "Omzet vs Pengeluaran per Kategori";
+                document.getElementById('chart-expenses-title').innerText = "Distribusi Pengeluaran Global";
+
+                Object.values(catData).forEach(d => {
+                    finalInc += d.inc;
+                    finalExp += d.exp;
+                });
+            } else {
+                document.getElementById('dash-category-title').innerText = `(${catData[dashCategoryFilter].label} Only)`;
+                document.getElementById('chart-sales-title').innerText = `Analisis Unit: ${catData[dashCategoryFilter].label}`;
+                document.getElementById('chart-expenses-title').innerText = `Pengeluaran ${catData[dashCategoryFilter].label}`;
+
+                finalInc = catData[dashCategoryFilter].inc;
+                finalExp = catData[dashCategoryFilter].exp;
+            }
+
+            finalNet = finalInc - finalExp;
+
+            // Render metrik teks
+            if(document.getElementById('dash-income')) document.getElementById('dash-income').innerText = '$' + finalInc.toFixed(2);
+            if(document.getElementById('dash-expense')) document.getElementById('dash-expense').innerText = '$' + finalExp.toFixed(2);
+            if(document.getElementById('dash-profit')) document.getElementById('dash-profit').innerText = (finalNet >= 0 ? '' : '-') + '$' + Math.abs(finalNet).toFixed(2);
+            if(document.getElementById('dash-modal-input')) document.getElementById('dash-modal-input').value = state.modalAwal;
+
+            const roiPercent = state.modalAwal > 0 ? (finalNet / state.modalAwal) * 100 : 0;
+            const roiEl = document.getElementById('dash-roi');
+            if(roiEl) {
+                roiEl.innerText = (roiPercent >= 0 ? '+' : '') + roiPercent.toFixed(2) + '%';
+                roiEl.className = `text-2xl font-extrabold mt-1 ${roiPercent < 0 ? 'text-rose-500' : 'text-purple-600 dark:text-purple-400'}`;
+            }
+
+            const remainingCapital = state.modalAwal - finalNet;
+            const bepEl = document.getElementById('dash-bep');
+            if (bepEl) bepEl.innerText = remainingCapital <= 0 ? "Target Profit Tercapai 🎉" : `Masih Butuh $${remainingCapital.toFixed(2)}`;
+
+            window.dashboardCategoryData = catData;
+            renderCharts();
+        }
+
+        function renderCharts() {
+            if (document.getElementById('tab-dash').classList.contains('hidden')) return;
+            if (typeof Chart === 'undefined') return;
+
+            const catData = window.dashboardCategoryData;
+            if(!catData) return;
+
+            // Menyesuaikan data untuk grafik berdasarkan filter
+            let labels = [];
+            let incData = [];
+            let expData = [];
+
+            if (dashCategoryFilter === 'all') {
+                labels = ['Cafe', 'Kamar', 'Venue', 'Pool', 'Umum'];
+                incData = [catData.cafe.inc, catData.guesthouse.inc, catData.venue.inc, catData.pool.inc, catData.umum.inc];
+                expData = [catData.cafe.exp, catData.guesthouse.exp, catData.venue.exp, catData.pool.exp, catData.umum.exp];
+            } else {
+                // Jika satu kategori difokuskan, Chart akan menyorot hanya kategori itu
+                labels = [catData[dashCategoryFilter].label];
+                incData = [catData[dashCategoryFilter].inc];
+                expData = [catData[dashCategoryFilter].exp];
+            }
+
+            const ctx1 = document.getElementById('chartSales');
+            if (ctx1) {
+                if (charts.sales) charts.sales.destroy();
+                charts.sales = new Chart(ctx1.getContext('2d'), { 
+                    type: 'bar', 
+                    data: { 
+                        labels, 
+                        datasets: [
+                            { label: 'Omzet ($)', data: incData, backgroundColor: '#10b981', borderRadius: 6 }, 
+                            { label: 'Total Biaya ($)', data: expData, backgroundColor: '#f43f5e', borderRadius: 6 }
+                        ] 
+                    }, 
+                    options: { 
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { labels: { font: { family: 'Plus Jakarta Sans', weight: 'bold' } } } }
+                    } 
+                });
+            }
+
+            const ctx2 = document.getElementById('chartExpenses');
+            if (ctx2) {
+                if (charts.exp) charts.exp.destroy();
+                const totalEx = expData.reduce((a,b)=>a+b,0);
+                charts.exp = new Chart(ctx2.getContext('2d'), { 
+                    type: 'doughnut', 
+                    data: { 
+                        labels: totalEx > 0 ? labels : ['Belum Ada Waktu Ini'], 
+                        datasets: [{ 
+                            data: totalEx > 0 ? expData : [1], 
+                            backgroundColor: dashCategoryFilter === 'all' ? ['#6366f1', '#06b6d4', '#a855f7', '#0ea5e9', '#64748b'] : ['#f43f5e'] 
+                        }] 
+                    }, 
+                    options: { 
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right' } }
+                    } 
+                });
+            }
+            safeCreateIcons();
+        }
+
+        // ==================== POS & CART LOGIC ====================
         function filterCategory(cat) {
             activeCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => {
@@ -1022,7 +1098,6 @@
             renderProducts();
         }
 
-        // ==================== RENDERING PRODUK DENGAN QR BOX PROTECTED ====================
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             const filtered = activeCategory === 'all' ? state.products : state.products.filter(p => p.category === activeCategory);
@@ -1035,17 +1110,21 @@
             grid.innerHTML = filtered.map(p => {
                 let badgeIcon = p.category === 'guesthouse' ? 'bed' : p.category === 'venue' ? 'building' : p.category === 'pool' ? 'waves' : 'coffee';
                 return `
-                    <div onclick="selectProductToCart('${p.sku}')" class="p-4 rounded-3xl glass-premium hover:border-indigo-500 cursor-pointer transition-all duration-300 flex flex-col justify-between h-52 border dark:border-iosGray-900">
+                    <div onclick="selectProductToCart('${p.sku}', event)" class="p-4 rounded-3xl glass-premium hover:border-indigo-500 cursor-pointer transition-all duration-300 flex flex-col justify-between h-52 border dark:border-iosGray-900">
                         <div class="flex justify-between items-start gap-1">
                             <div class="text-xs font-bold text-slate-800 dark:text-slate-100 flex items-start gap-1.5">
                                 <i data-lucide="${badgeIcon}" class="w-4 h-4 text-slate-400 mt-0.5 shrink-0"></i> <span>${p.name}</span>
                             </div>
                         </div>
                         
-                        <!-- PROTEKSI LATAR PUTIH UNTUK QR CODE DI DARK MODE -->
+                        <!-- PROTEKSI LATAR PUTIH UNTUK QR CODE DI DARK MODE DENGAN FALLBACK -->
                         <div class="flex items-center justify-center py-1">
-                            <div class="bg-white p-1 rounded-xl shadow-md flex items-center justify-center">
-                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(p.sku)}" alt="QR Code" class="w-14 h-14 object-contain">
+                            <div class="bg-white p-1 rounded-xl shadow-md flex items-center justify-center relative">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(p.sku)}" 
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                     alt="QR Code" loading="lazy" class="w-14 h-14 object-contain">
+                                <!-- Fallback if QR fails to load -->
+                                <div class="w-14 h-14 bg-slate-100 rounded flex items-center justify-center text-[8px] font-bold text-slate-400 hidden">NO QR</div>
                             </div>
                         </div>
 
@@ -1059,13 +1138,8 @@
             safeCreateIcons();
         }
 
-        // ==================== BOOKING DATE LOGIC ====================
-        function formatDate(date) {
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-            return `${date.getDate().toString().padStart(2,'0')} ${months[date.getMonth()]} ${date.getFullYear()}`;
-        }
-
-        function selectProductToCart(sku) {
+        function selectProductToCart(sku, e) {
+            if(e) addRipple(e);
             const p = state.products.find(item => item.sku === sku);
             if (!p) return;
 
@@ -1114,6 +1188,11 @@
             closeBookingModal();
         }
 
+        function formatDate(date) {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            return `${date.getDate().toString().padStart(2,'0')} ${months[date.getMonth()]} ${date.getFullYear()}`;
+        }
+
         function addToCart(name, price, hpp, qty, category = 'umum', details = "") {
             const existing = state.cart.find(item => item.name === name && item.details === details);
             if (existing) {
@@ -1146,7 +1225,7 @@
                     </div>
                     <div class="flex flex-col items-end gap-2 shrink-0">
                         <span class="font-extrabold text-slate-700 dark:text-slate-200 text-sm">$${(c.price * c.qty).toFixed(2)}</span>
-                        <button onclick="state.cart.splice(${index}, 1); renderCart();" class="w-5 h-5 rounded bg-rose-100 dark:bg-rose-950/50 text-rose-600 flex items-center justify-center font-bold text-xs">×</button>
+                        <button onclick="removeFromCart(${index}, event)" class="w-5 h-5 rounded bg-rose-100 dark:bg-rose-950/50 text-rose-600 flex items-center justify-center font-bold text-xs">×</button>
                     </div>
                 </div>
             `}).join('');
@@ -1155,33 +1234,33 @@
             safeCreateIcons();
         }
 
-        // ==================== PROCESS PAYMENT & PUSH TO KITCHEN ====================
-        function processPayment() {
+        function removeFromCart(index, e) {
+            if(e) addRipple(e);
+            state.cart.splice(index, 1);
+            renderCart();
+        }
+
+        function processPayment(e) {
+            if(e) addRipple(e);
             if (state.cart.length === 0) return showToast("Keranjang kosong!", "error");
 
             const total = state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const hpp = state.cart.reduce((sum, item) => sum + (item.hpp * item.qty), 0);
             
-            const itemsSummary = state.cart.map(c => {
-                return c.details ? `${c.name} x${c.qty} (${c.details})` : `${c.name} x${c.qty}`;
-            }).join(' | ');
+            const itemsSummary = state.cart.map(c => c.details ? `${c.name} x${c.qty} (${c.details})` : `${c.name} x${c.qty}`).join(' | ');
 
             const cartDataClone = JSON.parse(JSON.stringify(state.cart));
             const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            
+            const dateMs = Date.now();
             const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
 
-            // Kirim Antrean Dapur & Persiapan
-            state.activeOrders.push({
-                id: orderId,
-                items: cartDataClone,
-                timestamp: timestamp,
-                status: 'pending'
-            });
-
-            state.sales.push({ total, hpp, items: itemsSummary, timestamp, cartData: cartDataClone, orderId });
-            saveStateToDB();
+            // Antrean Dapur
+            state.activeOrders.push({ id: orderId, items: cartDataClone, timestamp, status: 'pending' });
             
+            // Rekaman Final POS (Membawa dateMs untuk filter waktu)
+            state.sales.push({ total, hpp, items: itemsSummary, timestamp, cartData: cartDataClone, orderId, dateMs });
+            
+            saveStateToDB();
             state.cart = [];
             renderCart();
             renderHistory();
@@ -1195,8 +1274,10 @@
 
         function generateReceiptNumber() {
             const date = new Date();
-            document.getElementById('receipt-number').innerText = `CS-RY-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2,'0')}${String(date.getDate()).padStart(2,'0')}-${Math.floor(1000 + Math.random() * 9000)}`;
-            document.getElementById('receipt-date').innerText = new Date().toLocaleString('id-ID', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const numEl = document.getElementById('receipt-number');
+            const dateEl = document.getElementById('receipt-date');
+            if(numEl) numEl.innerText = `CS-RY-${date.getFullYear()}${String(date.getMonth() + 1).padStart(2,'0')}${String(date.getDate()).padStart(2,'0')}-${Math.floor(1000 + Math.random() * 9000)}`;
+            if(dateEl) dateEl.innerText = new Date().toLocaleString('id-ID', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function renderHistory() {
@@ -1281,148 +1362,61 @@
             showToast(`Pesanan ${orderId} siap!`, "success");
         }
 
-        // ==================== DASHBOARD & EXPENSE LOGIC ====================
-        function updateDashboard() {
-            const income = state.sales.reduce((sum, item) => sum + item.total, 0);
-            const totalCOGS = state.sales.reduce((sum, item) => sum + item.hpp, 0);
-            const totalExpenses = state.expenses.reduce((sum, item) => sum + item.amt, 0);
-            const netProfit = income - totalCOGS - totalExpenses;
+        // ==================== EXPENSE MANAGER ====================
+        function addQuickExpense(name, amt, category, event) {
+            if(event) addRipple(event);
+            const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            state.expenses.push({ name, amt, timestamp, category, dateMs: Date.now() });
+            saveStateToDB();
+            renderExpenses();
+            updateDashboard();
+            showToast(`Biaya ${name} terekam.`);
+        }
 
-            const dInc = document.getElementById('dash-income');
-            const dExp = document.getElementById('dash-expense');
-            const dProf = document.getElementById('dash-profit');
-            
-            if(dInc) dInc.innerText = '$' + income.toFixed(2);
-            if(dExp) dExp.innerText = '$' + (totalExpenses + totalCOGS).toFixed(2);
-            if(dProf) dProf.innerText = (netProfit >= 0 ? '' : '-') + '$' + Math.abs(netProfit).toFixed(2);
-            
-            if (document.getElementById('dash-modal-input')) document.getElementById('dash-modal-input').value = state.modalAwal;
+        function addCustomExpense(e) {
+            if(e) addRipple(e);
+            const name = document.getElementById('ex-name').value.trim();
+            const amt = parseFloat(document.getElementById('ex-amt').value);
+            const category = document.getElementById('ex-cat').value;
 
-            const roiPercent = state.modalAwal > 0 ? (netProfit / state.modalAwal) * 100 : 0;
-            const roiEl = document.getElementById('dash-roi');
-            if (roiEl) {
-                roiEl.innerText = (roiPercent >= 0 ? '+' : '') + roiPercent.toFixed(2) + '%';
-                roiEl.className = `text-2xl font-extrabold mt-1 ${roiPercent < 0 ? 'text-rose-500' : 'text-purple-600 dark:text-purple-400'}`;
+            if(!name || isNaN(amt)) return showToast("Data tidak valid!", "error");
+
+            const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+            state.expenses.push({ name, amt, timestamp, category, dateMs: Date.now() });
+            saveStateToDB();
+
+            document.getElementById('ex-name').value = "";
+            document.getElementById('ex-amt').value = "";
+
+            renderExpenses();
+            updateDashboard();
+            showToast(`Expense ${name} disimpan.`);
+        }
+
+        function renderExpenses() {
+            const list = document.getElementById('expense-list');
+            if(!list) return;
+
+            if(state.expenses.length === 0) {
+                list.innerHTML = '<div class="p-4 text-center text-slate-400 italic">Belum ada pengeluaran terekam.</div>';
+                document.getElementById('expense-summary').innerText = '$0.00';
+                return;
             }
 
-            const avgMargin = state.products.length > 0 ? state.products.reduce((sum, p) => sum + (p.price - p.hpp), 0) / state.products.length : 0;
-            const remainingCapital = state.modalAwal - netProfit;
-            const bepUnits = (avgMargin > 0 && remainingCapital > 0) ? Math.ceil(remainingCapital / avgMargin) : 0;
-            const bepEl = document.getElementById('dash-bep');
-            if (bepEl) bepEl.innerText = remainingCapital <= 0 ? "Modal Tertutup 🎉" : `Sisa Target: ${bepUnits} Unit`;
-
-            // Hitung Performa Kategori Divisi
-            let catData = {
-                cafe: { inc: 0, exp: 0, label: "Cafe", icon: "coffee" },
-                guesthouse: { inc: 0, exp: 0, label: "Kamar", icon: "bed" },
-                venue: { inc: 0, exp: 0, label: "Venue", icon: "building" },
-                pool: { inc: 0, exp: 0, label: "Pool", icon: "waves" },
-                umum: { inc: 0, exp: 0, label: "Umum", icon: "briefcase" }
-            };
-
-            state.sales.forEach(sale => {
-                if(sale.cartData) { 
-                    sale.cartData.forEach(item => { 
-                        let c = item.category || 'umum'; 
-                        if(catData[c]) {
-                            catData[c].inc += (item.price * item.qty); 
-                            catData[c].exp += (item.hpp * item.qty); 
-                        }
-                    }); 
-                } else { 
-                    catData['umum'].inc += sale.total; 
-                    catData['umum'].exp += sale.hpp; 
-                }
-            });
-
-            state.expenses.forEach(ex => { 
-                let c = ex.category || 'umum'; 
-                if(catData[c]) catData[c].exp += ex.amt; 
-            });
-
-            const perfCards = document.getElementById('category-performance-cards');
-            if(perfCards) {
-                perfCards.innerHTML = Object.keys(catData).map(k => {
-                    let d = catData[k];
-                    let profit = d.inc - d.exp;
-                    return `
-                    <div class="bg-white dark:bg-iosGray-900 p-4 rounded-3xl border dark:border-iosGray-800 text-center flex flex-col justify-between">
-                        <div class="flex justify-center text-slate-400 dark:text-slate-500 mb-2">
-                            <i data-lucide="${d.icon}" class="w-6 h-6"></i>
-                        </div>
-                        <h5 class="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">${d.label}</h5>
-                        <div class="space-y-1 text-[10px] border-t dark:border-iosGray-800 pt-2">
-                            <div class="flex justify-between"><span>Omzet:</span> <span class="font-bold text-emerald-500">$${d.inc.toFixed(1)}</span></div>
-                            <div class="flex justify-between"><span>Biaya:</span> <span class="font-bold text-rose-500">$${d.exp.toFixed(1)}</span></div>
-                            <div class="flex justify-between font-bold border-t dark:border-iosGray-800 pt-1 mt-1"><span>Net:</span> <span class="${profit >= 0 ? 'text-emerald-500' : 'text-rose-500'}">$${profit.toFixed(1)}</span></div>
-                        </div>
+            list.innerHTML = state.expenses.map(ex => `
+                <div class="py-2.5 flex justify-between items-center text-xs">
+                    <div>
+                        <div class="font-bold">${ex.name} <span class="text-[9px] bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 px-2 py-0.5 rounded font-black uppercase">${ex.category}</span></div>
+                        <div class="text-[9px] text-slate-400">${ex.timestamp}</div>
                     </div>
-                    `;
-                }).join('');
-            }
+                    <span class="font-black text-rose-500">-$${ex.amt.toFixed(2)}</span>
+                </div>
+            `).reverse().join('');
 
-            window.dashboardCategoryData = catData;
-            renderCharts();
+            document.getElementById('expense-summary').innerText = '$' + state.expenses.reduce((sum, item) => sum + item.amt, 0).toFixed(2);
         }
 
-        function renderCharts() {
-            if (document.getElementById('tab-dash').classList.contains('hidden')) return;
-            if (typeof Chart === 'undefined') return;
-
-            const catData = window.dashboardCategoryData;
-            if(!catData) return;
-
-            const labels = ['Cafe', 'Kamar', 'Venue', 'Pool', 'Umum'];
-            const incData = [catData.cafe.inc, catData.guesthouse.inc, catData.venue.inc, catData.pool.inc, catData.umum.inc];
-            const expData = [catData.cafe.exp, catData.guesthouse.exp, catData.venue.exp, catData.pool.exp, catData.umum.exp];
-
-            const ctx1 = document.getElementById('chartSales');
-            if (ctx1) {
-                if (charts.sales) charts.sales.destroy();
-                charts.sales = new Chart(ctx1.getContext('2d'), { 
-                    type: 'bar', 
-                    data: { 
-                        labels, 
-                        datasets: [
-                            { label: 'Omzet ($)', data: incData, backgroundColor: '#10b981', borderRadius: 6 }, 
-                            { label: 'Expense ($)', data: expData, backgroundColor: '#f43f5e', borderRadius: 6 }
-                        ] 
-                    }, 
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { labels: { font: { family: 'Plus Jakarta Sans', weight: 'bold' } } }
-                        }
-                    } 
-                });
-            }
-
-            const ctx2 = document.getElementById('chartExpenses');
-            if (ctx2) {
-                if (charts.exp) charts.exp.destroy();
-                const totalEx = expData.reduce((a,b)=>a+b,0);
-                charts.exp = new Chart(ctx2.getContext('2d'), { 
-                    type: 'doughnut', 
-                    data: { 
-                        labels: totalEx>0 ? labels : ['Kosong'], 
-                        datasets: [{ 
-                            data: totalEx>0 ? expData : [1], 
-                            backgroundColor: ['#6366f1', '#06b6d4', '#a855f7', '#0ea5e9', '#64748b'] 
-                        }] 
-                    }, 
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'right' }
-                        }
-                    } 
-                });
-            }
-        }
-
-        // ==================== TAMBAH PRODUK BARU ====================
+        // ==================== SETTINGS ====================
         function addProduct(e) {
             if(e) addRipple(e);
             const name = document.getElementById('p-name').value.trim();
@@ -1446,70 +1440,6 @@
             renderProducts();
             renderSettingsProducts();
             showToast(`Sukses mendaftarkan ${name}`);
-        }
-
-        function addQuickExpense(name, amt, category, event) {
-            if(event) addRipple(event);
-            const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-            state.expenses.push({ name, amt, timestamp, category });
-            saveStateToDB();
-            renderExpenses();
-            updateDashboard();
-            showToast(`Biaya ${name} terekam.`);
-        }
-
-        function addCustomExpense(e) {
-            if(e) addRipple(e);
-            const name = document.getElementById('ex-name').value.trim();
-            const amt = parseFloat(document.getElementById('ex-amt').value);
-            const category = document.getElementById('ex-cat').value;
-
-            if(!name || isNaN(amt)) return showToast("Data tidak valid!", "error");
-
-            const timestamp = new Date().toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
-            state.expenses.push({ name, amt, timestamp, category });
-            saveStateToDB();
-
-            document.getElementById('ex-name').value = "";
-            document.getElementById('ex-amt').value = "";
-
-            renderExpenses();
-            updateDashboard();
-            showToast(`Expense ${name} disimpan.`);
-        }
-
-        function renderExpenses() {
-            const list = document.getElementById('expense-list');
-            if(!list) return;
-
-            if(state.expenses.length === 0) {
-                list.innerHTML = '<div class="p-4 text-center text-slate-400 italic">Belum ada pengeluaran terekam.</div>';
-                return;
-            }
-
-            list.innerHTML = state.expenses.map(ex => `
-                <div class="py-2.5 flex justify-between items-center text-xs">
-                    <div>
-                        <div class="font-bold">${ex.name} <span class="text-[9px] bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 px-2 py-0.5 rounded font-black uppercase">${ex.category}</span></div>
-                        <div class="text-[9px] text-slate-400">${ex.timestamp}</div>
-                    </div>
-                    <span class="font-black text-rose-500">-$${ex.amt.toFixed(2)}</span>
-                </div>
-            `).reverse().join('');
-
-            document.getElementById('expense-summary').innerText = '$' + state.expenses.reduce((sum, item) => sum + item.amt, 0).toFixed(2);
-        }
-
-        function resetProducts(e) {
-            if(e) addRipple(e);
-            showCustomConfirm("Reset Data?", "Yakin ingin mereset seluruh database katalog ke data bawaan?", () => {
-                state.products = JSON.parse(JSON.stringify(defaultState.products));
-                saveStateToDB();
-                renderProducts();
-                renderSettingsProducts();
-                updateDashboard();
-                showToast("Sistem diatur ulang.");
-            });
         }
 
         function renderSettingsProducts() {
@@ -1537,6 +1467,18 @@
             `;
         }
 
+        function resetProducts(e) {
+            if(e) addRipple(e);
+            showCustomConfirm("Reset Data?", "Yakin ingin mereset seluruh database katalog ke data bawaan?", () => {
+                state.products = JSON.parse(JSON.stringify(defaultState.products));
+                saveStateToDB();
+                renderProducts();
+                renderSettingsProducts();
+                updateDashboard();
+                showToast("Sistem diatur ulang.");
+            });
+        }
+
         function showCustomConfirm(title, message, onConfirm) {
             const modal = document.getElementById('confirm-modal');
             document.getElementById('confirm-title').innerText = title;
@@ -1555,24 +1497,21 @@
             };
         }
 
+        // ==================== EXPORT DATA ====================
         function exportData(e) {
             if(e) addRipple(e);
+            if (typeof XLSX === 'undefined') {
+                showToast("Menunggu pustaka Excel selesai dimuat...", "info");
+                return;
+            }
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.json_to_sheet([...state.sales, ...state.expenses]);
-            XLSX.utils.book_append_sheet(wb, ws, "Laporan Finansial");
-            XLSX.writeFile(wb, "Laporan_Keuangan_Terpadu.xlsx");
+            XLSX.utils.book_append_sheet(wb, ws, "Financial Data");
+            XLSX.writeFile(wb, "Data_Compras_Simples.xlsx");
+            showToast("Data Berhasil Diekspor!", "success");
         }
 
-        function safeCreateIcons() {
-            try {
-                if (window.lucide) {
-                    window.lucide.createIcons();
-                }
-            } catch (e) {
-                console.warn("Lucide Icons sedang memuat ulang...", e);
-            }
-        }
-
+        // ==================== INISIALISASI UTAMA ====================
         window.onload = function() {
             loadStateFromDB();
             renderProducts();
@@ -1582,8 +1521,11 @@
             generateReceiptNumber();
             updatePrepBadge();
             
-            // Selalu mulai dalam kondisi sistem terkunci penuh
+            // Selalu mulai dalam kondisi sistem terkunci penuh demi keamanan
             lockSystem();
+            
+            // Panggil paksa render ikon setelah elemen selesai disiapkan
+            safeCreateIcons();
         }
     </script>
 </body>
